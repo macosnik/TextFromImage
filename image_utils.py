@@ -1,34 +1,35 @@
-def load(name_file): #
-    if name_file[-3:] != 'bmp': #
-        import os #
-        os.system(f"convert {name_file} -depth 24 -type TrueColor {f'{name_file[:name_file.rfind('.')]}.bmp'}") #
-        name_file = f'{name_file[:name_file.rfind('.')]}.bmp' #
+def load(name_file): # Чтение изображений
+    if name_file[-3:] != 'bmp': # Если тип файла не BMP
+        from os import system # Для работы с терминалом
 
-    with open(name_file, 'rb') as file: #
-        data = file.read() #
+        system(f"convert {name_file} -depth 24 -type TrueColor {f'{name_file[:name_file.rfind('.')]}.bmp'}") # Преобразовываем формат изображения в BMP с помощью терминала
+        name_file = f'{name_file[:name_file.rfind('.')]}.bmp' # Новое имя файла (Меняем с нынешнего формата на BMP)
 
-    width = int.from_bytes(data[18:22], byteorder='little') #
-    height = int.from_bytes(data[22:26], byteorder='little') #
+    with open(name_file, 'rb') as file: # Открытие файла для чтения
+        data = file.read() # Читаем файл и получаем байтовое представление файла
 
-    data = data[138:] #
+    width = int.from_bytes(data[18:22], byteorder='little') # Ширина изображения
+    height = int.from_bytes(data[22:26], byteorder='little') # Высота изображения
 
-    arr = [] #
+    data = data[138:] # Оставляем только пиксельные данные, идущие за 137 байтом (заголовки и метаданные в байтах)
 
-    row_size = (width * 3 + 3) // 4 * 4 #
+    arr = [] # Создаём список для будущего изображения в RGB формате
 
-    for y in range(height - 1, -1, -1): #
-        row = [] #
+    row_size = (width * 3 + 3) // 4 * 4 # Длина строки с учётом выравнивания по байтам (кратно 4)
+
+    for y in range(height - 1, -1, -1): # Отзеркаливаем изображение во все стороны, поскольку BMP файл их хранит в перевёрнутом виде
+        row = [] # Создаём список для строки
 
         for x in range(width):
-            index = y * row_size + x * 3 #
+            index = y * row_size + x * 3 # Положение нынешнего пикселя на изображении
 
-            row.append((data[index + 2], data[index + 1], data[index])) #
+            row.append((data[index + 2], data[index + 1], data[index])) # Добавляем в строку соответствующий RGB цвет
 
-        arr.append(row) #
+        arr.append(row) # Добавляем строку в изображение
 
-    return arr #
+    return arr # Возвращаем изображение
 
-def save(arr, name_file): # Сохранение bmp изображения
+def save(arr, name_file): # Сохранение BMP изображения
     width = len(arr[0]) # Ширина изображения
     height = len(arr) # Высота изображения
 
@@ -38,9 +39,9 @@ def save(arr, name_file): # Сохранение bmp изображения
     data_size = 137 + pixels_size # Размер всего файла (в байтах). 137 - это размер заголовков и метаданных
 
     pixels_data = bytearray() # Пиксельные данные
-    for y in range(height - 1, -1, -1): # Отзеркаливаем изображение во все стороны, поскольку bmp файл их хранит в перевёрнутом виде
+    for y in range(height - 1, -1, -1): # Отзеркаливаем изображение во все стороны, поскольку BMP файл их хранит в перевёрнутом виде
         for x in range(width):
-            pixels_data.extend([arr[y][x][2], arr[y][x][1], arr[y][x][0]]) # Добавляем в данные цвета в формате bgr
+            pixels_data.extend([arr[y][x][2], arr[y][x][1], arr[y][x][0]]) # Добавляем в данные цвета в формате BGR
 
         pixels_data.extend([0] * (row_size - width * 3)) # Добавляем дополнительные байты для выравнивания
 
