@@ -42,16 +42,16 @@ def save(arr, name_file): # Сохранение bmp изображения
         for x in range(width):
             pixels_data.extend([arr[y][x][2], arr[y][x][1], arr[y][x][0]]) # Добавляем в данные цвета в формате bgr
 
-        pixels_data.extend([0] * (row_size - width * 3)) #
+        pixels_data.extend([0] * (row_size - width * 3)) # Добавляем дополнительные байты для выравнивания
 
-    with open(name_file, 'wb') as data: #
-        #
+    with open(name_file, 'wb') as data: # Открываем файл, если нет, то создаём
+        # Записываем файловые данные
         data.write(bytearray([0x42, 0x4D, # Тип
                    data_size & 0xFF, (data_size >> 8) & 0xFF, (data_size >> 16) & 0xFF, (data_size >> 24) & 0xFF, # Размер
                    0, 0, 0, 0, 137, 0, 0, 0 # 137 - заголовки + метаданные в байтах
                    ]))
 
-        #
+        # Записываем информационные данные
         data.write(bytearray([
                    40, 0, 0, 0,  # Размер
                    width & 0xFF, (width >> 8) & 0xFF, (width >> 16) & 0xFF, (width >> 24) & 0xFF,  # Ширина
