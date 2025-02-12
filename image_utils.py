@@ -1,32 +1,32 @@
-def load(name_file):
-    if name_file[-3:] != 'bmp':
-        import os
-        os.system(f"convert {name_file} -depth 24 -type TrueColor {f'{name_file[:name_file.rfind('.')]}.bmp'}")
-        name_file = f'{name_file[:name_file.rfind('.')]}.bmp'
+def load(name_file): #
+    if name_file[-3:] != 'bmp': #
+        import os #
+        os.system(f"convert {name_file} -depth 24 -type TrueColor {f'{name_file[:name_file.rfind('.')]}.bmp'}") #
+        name_file = f'{name_file[:name_file.rfind('.')]}.bmp' #
 
-    with open(name_file, 'rb') as file:
-        data = file.read()
+    with open(name_file, 'rb') as file: #
+        data = file.read() #
 
-    width = int.from_bytes(data[18:22], byteorder='little')
-    height = int.from_bytes(data[22:26], byteorder='little')
+    width = int.from_bytes(data[18:22], byteorder='little') #
+    height = int.from_bytes(data[22:26], byteorder='little') #
 
-    data = data[138:]
+    data = data[138:] #
 
-    arr = []
+    arr = [] #
 
-    row_size = (width * 3 + 3) // 4 * 4
+    row_size = (width * 3 + 3) // 4 * 4 #
 
-    for y in range(height - 1, -1, -1):
-        row = []
+    for y in range(height - 1, -1, -1): #
+        row = [] #
 
         for x in range(width):
-            index = y * row_size + x * 3
+            index = y * row_size + x * 3 #
 
-            row.append((data[index + 2], data[index + 1], data[index]))
+            row.append((data[index + 2], data[index + 1], data[index])) #
 
-        arr.append(row)
+        arr.append(row) #
 
-    return arr
+    return arr #
 
 def save(arr, name_file): # Сохранение bmp изображения
     width = len(arr[0]) # Ширина изображения
