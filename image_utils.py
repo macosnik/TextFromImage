@@ -28,28 +28,30 @@ def load(name_file):
 
     return arr
 
-def save(arr, name_file):
-    width = len(arr[0])
-    height = len(arr)
+def save(arr, name_file): # Сохранение bmp изображения
+    width = len(arr[0]) # Ширина изображения
+    height = len(arr) # Высота изображения
 
-    row_size = ((width * 3 + 3) // 4) * 4
+    row_size = ((width * 3 + 3) // 4) * 4 # Длина строки с учётом выравнивания по байтам (кратно 4)
 
-    pixels_size = row_size * height
-    data_size = 138 + pixels_size
+    pixels_size = row_size * height # Размер
+    data_size = 137 + pixels_size #
 
-    pixels_data = bytearray()
-    for y in range(height - 1, -1, -1):
-        for x in range(width):
-            pixels_data.extend([arr[y][x][2], arr[y][x][1], arr[y][x][0]])
+    pixels_data = bytearray() #
+    for y in range(height - 1, -1, -1): #
+        for x in range(width): #
+            pixels_data.extend([arr[y][x][2], arr[y][x][1], arr[y][x][0]]) #
 
-        pixels_data.extend([0] * (row_size - width * 3))
+        pixels_data.extend([0] * (row_size - width * 3)) #
 
-    with open(name_file, 'wb') as data:
+    with open(name_file, 'wb') as data: #
+        #
         data.write(bytearray([0x42, 0x4D, # Тип
                    data_size & 0xFF, (data_size >> 8) & 0xFF, (data_size >> 16) & 0xFF, (data_size >> 24) & 0xFF, # Размер
-                   0, 0, 0, 0, 138, 0, 0, 0 # 138 - заголовки + метаданные в байтах
+                   0, 0, 0, 0, 137, 0, 0, 0 # 137 - заголовки + метаданные в байтах
                    ]))
 
+        #
         data.write(bytearray([
                    40, 0, 0, 0,  # Размер
                    width & 0xFF, (width >> 8) & 0xFF, (width >> 16) & 0xFF, (width >> 24) & 0xFF,  # Ширина
@@ -59,6 +61,6 @@ def save(arr, name_file):
                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                    ]))
 
-        data.write(bytearray(83))
+        data.write(bytearray(83)) #
 
-        data.write(pixels_data)
+        data.write(pixels_data) #

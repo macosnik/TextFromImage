@@ -1,4 +1,4 @@
 from image_utils import *
 
-arr = load('blank1.png')
-print(arr)
+image = load('blank1.png')
+save(image, 'blank1_output.bmp')
