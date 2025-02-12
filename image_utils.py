@@ -34,13 +34,13 @@ def save(arr, name_file): # Сохранение bmp изображения
 
     row_size = ((width * 3 + 3) // 4) * 4 # Длина строки с учётом выравнивания по байтам (кратно 4)
 
-    pixels_size = row_size * height # Размер
-    data_size = 137 + pixels_size #
+    pixels_size = row_size * height # Размер данных пикселей (в байтах)
+    data_size = 137 + pixels_size # Размер всего файла (в байтах). 137 - это размер заголовков и метаданных
 
-    pixels_data = bytearray() #
-    for y in range(height - 1, -1, -1): #
-        for x in range(width): #
-            pixels_data.extend([arr[y][x][2], arr[y][x][1], arr[y][x][0]]) #
+    pixels_data = bytearray() # Пиксельные данные
+    for y in range(height - 1, -1, -1): # Отзеркаливаем изображение во все стороны, поскольку bmp файл их хранит в перевёрнутом виде
+        for x in range(width):
+            pixels_data.extend([arr[y][x][2], arr[y][x][1], arr[y][x][0]]) # Добавляем в данные цвета в формате bgr
 
         pixels_data.extend([0] * (row_size - width * 3)) #
 
