@@ -63,4 +63,4 @@ def save(arr, name_file): # Сохранение bmp изображения
 
         data.write(bytearray(83)) # Записываем пиксельные данные
 
-        data.write(pixels_data) #
+        data.write(pixels_data) # Записываем пиксельные данные
