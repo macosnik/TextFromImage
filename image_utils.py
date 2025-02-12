@@ -28,4 +28,3 @@ def load(name_file):
 
     return arr
 
-
