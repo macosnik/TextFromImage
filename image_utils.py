@@ -19,7 +19,6 @@ def load(name_file): # Чтение изображений
 
     for y in range(height - 1, -1, -1): # Отзеркаливаем изображение во все стороны, поскольку BMP файл их хранит в перевёрнутом виде
         row = [] # Создаём список для строки
-
         for x in range(width):
             index = y * row_size + x * 3 # Положение нынешнего пикселя на изображении
 
@@ -65,3 +64,17 @@ def save(arr, name_file): # Сохранение BMP изображения
         data.write(bytearray(83)) # Записываем пиксельные данные
 
         data.write(pixels_data) # Записываем пиксельные данные
+
+def simplify(arr): #
+    new_arr = [] #
+
+    for y in arr:
+        row = [] #
+        for x in y:
+            if sum(arr[y][x] / 3 <= 127.5): # Если
+                row.append((0, 0, 0)) # Заполняем негром
+            else:
+                row.append((255, 255, 255)) # Заполняем былым
+        new_arr.append(row) # Добавляем строку в изображение
+
+    return new_arr # Возвращаем изображение
