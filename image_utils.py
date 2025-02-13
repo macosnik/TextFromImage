@@ -1,9 +1,11 @@
-def load(name_file): # Чтение изображений
-    if name_file[-3:] != 'bmp': # Если тип файла не BMP
-        from os import system # Для работы с терминалом
+from subprocess import run # Для работы с терминалом
+from os.path import  splitext # Для нахождения типа файла
 
-        system(f"convert {name_file} -depth 24 -type TrueColor {f'{name_file[:name_file.rfind('.')]}.bmp'}") # Преобразовываем формат изображения в BMP с помощью терминала
-        name_file = f'{name_file[:name_file.rfind('.')]}.bmp' # Новое имя файла (Меняем с нынешнего формата на BMP)
+def load(name_file): # Чтение изображений
+    base_name, ext = splitext(name_file) # Нахождение имени фала и его формата
+    if base_name != '.bmp': # Если тип файла не BMP
+        run(["convert", name_file, "-depth", "24", "-type", "TrueColor", f"{base_name}.bmp"], check=True) # Преобразовываем формат изображения в BMP с помощью терминала
+        name_file = f"{base_name}.bmp" # Новое имя файла (Меняем с нынешнего формата на BMP)
 
     with open(name_file, 'rb') as file: # Открытие файла для чтения
         data = file.read() # Читаем файл и получаем байтовое представление файла
