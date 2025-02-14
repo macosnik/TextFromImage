@@ -135,7 +135,7 @@ def save(arr, file_name):
     bgr_arr = arr[:, :, [2, 1, 0]]
 
     padded_arr = zeros((height, row_size), dtype=uint8)
-    padded_arr[:, :width * 3] = bgr_arr.reshare(height, width * 3)
+    padded_arr[:, :width * 3] = bgr_arr.reshape(height, width * 3)
 
     pixels_data = padded_arr.tobytes()
 

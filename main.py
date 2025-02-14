@@ -4,7 +4,7 @@ import time
 start = time.time()
 
 # blank1.png
-image = load('picture.jpeg')
-save(image, 'picture_output.bmp')
+image = load('test.jpg')
+save(image, 'output.bmp')
 
 print(f"Код завершился за: {round(time.time() - start, 3)} секунды")
