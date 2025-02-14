@@ -1,6 +1,12 @@
+# Для быстрой работы с массивами
 import numpy
 
 def load(file_name):
+    """
+
+    :param file_name: имя файла
+    :return: список с rgb пикселями
+    """
     with open(file_name, 'rb') as file:
         file_header = file.read(14)
 
