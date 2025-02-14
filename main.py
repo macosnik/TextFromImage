@@ -1,5 +1,6 @@
 from image_utils import *
 
-image = load('blank1.png')
+# blank1.png
+image = load('picture.jpeg')
 image = simplify(image)
 save(image, 'blank1_output.bmp')

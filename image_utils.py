@@ -1,9 +1,8 @@
 from subprocess import run # Для работы с терминалом
-from os.path import  splitext # Для нахождения типа файла
 
 def load(name_file): # Чтение изображений
-    base_name, ext = splitext(name_file) # Нахождение имени фала и его формата
-    if base_name != '.bmp': # Если тип файла не BMP
+    base_name = name_file[:name_file.rfind('.')] # Нахождение имени фала и его формата
+    if name_file[name_file.rfind('.'):] != '.bmp': # Если тип файла не BMP
         run(["convert", name_file, "-depth", "24", "-type", "TrueColor", f"{base_name}.bmp"], check=True) # Преобразовываем формат изображения в BMP с помощью терминала
         name_file = f"{base_name}.bmp" # Новое имя файла (Меняем с нынешнего формата на BMP)
 
@@ -13,11 +12,11 @@ def load(name_file): # Чтение изображений
     width = int.from_bytes(data[18:22], byteorder='little') # Ширина изображения
     height = int.from_bytes(data[22:26], byteorder='little') # Высота изображения
 
-    data = data[138:] # Оставляем только пиксельные данные, идущие за 137 байтом (заголовки и метаданные в байтах)
-
-    arr = [] # Создаём список для будущего изображения в RGB формате
+    data = data[138:len(data) - 406] # Оставляем только пиксельные данные, идущие за 137 байтом (заголовки и метаданные в байтах)
 
     row_size = (width * 3 + 3) // 4 * 4 # Длина строки с учётом выравнивания по байтам (кратно 4)
+
+    arr = []
 
     for y in range(height - 1, -1, -1): # Отзеркаливаем изображение во все стороны, поскольку BMP файл их хранит в перевёрнутом виде
         row = [] # Создаём список для строки
