@@ -4,6 +4,8 @@ import time
 start = time.time()
 
 # blank1.png
-image = load('blank1.bmp')
+image = load('picture.jpeg')
 
-print(time.time() - start)
+print(round(time.time() - start, 3))
+
+print(image)

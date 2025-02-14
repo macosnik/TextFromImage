@@ -1,12 +1,23 @@
 # Для быстрой работы с массивами
-import numpy
+from numpy import frombuffer, uint8
+from os import getcwd, listdir, system
+from subprocess import run
+
 
 def load(file_name):
     """
-
+    Загрузка изображения для получения всех цветов пикселей
     :param file_name: имя файла
-    :return: список с rgb пикселями
+    :return: список пикселей rgb формата
     """
+    if file_name[-4:] != '.bmp':
+        bmp_name = f"{file_name[:file_name.rfind('.')]}.bmp"
+
+        if bmp_name not in listdir(getcwd()):
+            run(["convert", file_name, "-depth", "24", "-type", "TrueColor", bmp_name], check=True)
+
+        file_name = bmp_name
+
     with open(file_name, 'rb') as file:
         file_header = file.read(14)
 
@@ -31,7 +42,7 @@ def load(file_name):
 
         image_data = file.read(row_size * height)
 
-        arr = numpy.frombuffer(image_data, dtype=numpy.uint8)
+        arr = frombuffer(image_data, dtype=uint8)
 
         arr = arr.reshape((height, row_size))[:, :width * 3].reshape(height, width, 3)
 
