@@ -1,7 +1,19 @@
-# Для быстрой работы с массивами
+# NumPy - быстрая работа с массивами(значительно ускорит алгоритмы)
 from numpy import frombuffer, uint8
-from os import getcwd, listdir, system
-from subprocess import run
+"""
+:param frombuffer - создание NumPy массива из байтовой строки
+:param uint8 - беззнаковое 8 байтовое целочисленное число NumPy
+"""
+
+# os - модуля для взаимосвязи с компьютером
+from os import getcwd as path, listdir as path_obj
+"""
+:param path - функция для нахождения пути по компьютеру к данной директории
+:param path_obj - функция для нахождения всех папок и фалов по пути
+"""
+
+# subprocess - модуль для обращения к терминалу компьютера
+from subprocess import run as terminal
 
 
 def load(file_name):
@@ -13,8 +25,8 @@ def load(file_name):
     if file_name[-4:] != '.bmp':
         bmp_name = f"{file_name[:file_name.rfind('.')]}.bmp"
 
-        if bmp_name not in listdir(getcwd()):
-            run(["convert", file_name, "-depth", "24", "-type", "TrueColor", bmp_name], check=True)
+        if bmp_name not in path_obj(path()):
+            terminal(["convert", file_name, "-depth", "24", "-type", "TrueColor", bmp_name], check=True)
 
         file_name = bmp_name
 
