@@ -46,30 +46,43 @@ def load(file_name):
         if file_header[:2] != b'BM':
             raise ValueError('Ошибка конвертации изображения')
 
+        # Чтение расстояния в батах до данных пикселей (4 байта, начиная с 10 байта)
         pixels_data_offset = int.from_bytes(file_header[10:14], byteorder='little')
 
+        # Чтение информационного заголовка (40 байт)
         info_header = file.read(40)
 
+        # Чтение высоты и ширина изображения (по 4 байта, начиная с 4 байта)
         width = int.from_bytes(info_header[4:8], byteorder='little')
         height = int.from_bytes(info_header[8:12], byteorder='little')
 
+        # Получение кол-ва байтов в палитре пикселя
         bits_pixels = int.from_bytes(info_header[14:16], byteorder='little')
 
         # Если байтовая палитра не является 24 битной, то сваливаем всё на ошибку в конвертации файла
         if bits_pixels != 24:
             raise ValueError('Ошибка конвертации изображения')
 
+        # Читаем оставшиеся байты до пикселей
         file.seek(pixels_data_offset)
 
+        # Рассчитываем размер строки с учётом смещения
         row_size = (width * 3 + 3) & ~3
 
-        image_data = file.read(row_size * height)
+        # Чтение всех пикселей
+        arr_data = file.read(row_size * height)
 
-        arr = frombuffer(image_data, dtype=uint8)
+        # Создаю массив на основе всех пикселей в байтах. Тип чисел - беззнаковое 8 байтовое целочисленное
+        arr = frombuffer(arr_data, dtype=uint8)
 
+        # Сначала массив перестраивается в height количество первичных массивов в arr, затем в width количество двоичных массивов в каждом массиве первичного массива.
+        # Затем обрезаем вторичный массив до width * 3. (: - это все строки)
+        # Затем преобразовываем массив в трёхмерный, добавляя в троичный массив по 3 числа
         arr = arr.reshape((height, row_size))[:, :width * 3].reshape(height, width, 3)
 
+        # Изменяем порядок троичных данных массива, переворачивая массив. Было BGR, а стало - RGB
         arr = arr[:, :, [2, 1, 0]]
 
+        # Возвращаем массив
         return arr
 
