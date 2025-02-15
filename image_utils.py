@@ -1,5 +1,5 @@
 # NumPy - быстрая работа с массивами(значительно ускорит алгоритмы)
-from numpy import frombuffer, uint8, zeros, full, cumsum, mean, linspace, round as round_numpy
+import numpy
 """
 :param frombuffer - создание NumPy массива из байтовой строки
 :param uint8 - беззнаковое 8 байтовое целочисленное число NumPy
@@ -7,6 +7,8 @@ from numpy import frombuffer, uint8, zeros, full, cumsum, mean, linspace, round 
 :param full - заполняет массив нужным типом данных
 :param cumsum - возвращает массив с данными, где каждый элемент является суммой предыдущего
 :param mean - среднее арифметическое элементов массива
+:param round - округление
+:param linspace - равномерное распределение чисел по массиву
 """
 
 # os - модуля для взаимосвязи с компьютером
@@ -77,7 +79,7 @@ def load(file_name):
         arr_data = file.read(row_size * height)
 
         # Создаю массив на основе всех пикселей в байтах. Тип чисел - беззнаковое 8 байтовое целочисленное
-        arr = frombuffer(arr_data, dtype=uint8)
+        arr = numpy.frombuffer(arr_data, dtype=numpy.uint8)
 
         # Сначала массив перестраивается в height количество первичных массивов в arr, затем в width количество двоичных массивов в каждом массиве первичного массива.
         # Затем обрезаем вторичный массив до width * 3. (: - это все строки)
@@ -136,7 +138,7 @@ def save(arr, file_name):
     bgr_arr = arr[:, :, [2, 1, 0]]
 
     # Создаём массив и выравниваем каждую строку
-    padded_arr = zeros((height, row_size), dtype=uint8)
+    padded_arr = numpy.zeros((height, row_size), dtype=numpy.uint8)
     padded_arr[:, :width * 3] = bgr_arr.reshape(height, width * 3)
 
     # Преобразуем массив в битовый вид
@@ -161,19 +163,19 @@ def compression(arr, horizontally, vertically):
     height, width, _ = arr.shape
 
     # Создаём массивы с указанием размеров блоков: по горизонтали и вертикали. Заполняем его числами полученными в результате деления исходно1 на желаемую стороны изображения
-    x_factors =  full(horizontally, width // horizontally)
-    y_factors = full(vertically, height // vertically)
+    x_factors =  numpy.full(horizontally, width // horizontally)
+    y_factors = numpy.full(vertically, height // vertically)
 
     # Остаток раскидываем по массиву указаний размеров блоков
     x_factors[:width % horizontally] += 1
     y_factors[:height % vertically] += 1
 
     # Вычисление индексов для получения блоков изображения
-    x_indexes = cumsum([0] + x_factors.tolist())
-    y_indexes = cumsum([0] + y_factors.tolist())
+    x_indexes = numpy.cumsum([0] + x_factors.tolist())
+    y_indexes = numpy.cumsum([0] + y_factors.tolist())
 
     # Создаём новый массив, в котором будет конечный результат
-    new_arr = zeros((vertically, horizontally, 3), dtype=uint8)
+    new_arr = numpy.zeros((vertically, horizontally, 3), dtype=numpy.uint8)
 
     # Поблочная обработка
     for y in range(vertically):
@@ -182,10 +184,10 @@ def compression(arr, horizontally, vertically):
             block = arr[y_indexes[y]:y_indexes[y + 1], x_indexes[x]:x_indexes[x + 1]]
 
             # Сумма цветов в блоке
-            sum_colors = mean(block, axis=(0, 1))
+            sum_colors = numpy.mean(block, axis=(0, 1))
 
             # Если меньше синего, то закрашиваем в чёрный
-            new_arr[y, x] = (255, 255, 255) if mean(sum_colors) >= 127.5 else (0, 0, 0)
+            new_arr[y, x] = (255, 255, 255) if numpy.mean(sum_colors) >= 127.5 else (0, 0, 0)
 
     # Возвращаем сжатое изображение
     return new_arr
@@ -198,10 +200,10 @@ def simplify(arr, factor=127.5):
     :return: чёрно-белое изображение
     """
     # Средняя яркость для каждого пикселя
-    brightness = mean(arr, axis=2)
+    brightness = numpy.mean(arr, axis=2)
 
     # Трёхканальный результат
-    result = zeros((*brightness.shape, 3), dtype=uint8)
+    result = numpy.zeros((*brightness.shape, 3), dtype=numpy.uint8)
 
     # Бинаризация для всех трёх каналов одновременно
     result[:, :, :] = 255 * (brightness >= factor)[:, :, None]
@@ -241,8 +243,8 @@ def draw_line(image, x1, y1, x2, y2, color):
         return image
 
     # Генерируем координаты точек вдоль линии
-    x_coords = round_numpy(linspace(x1, x2, length)).astype(int)
-    y_coords = round_numpy(linspace(y1, y2, length)).astype(int)
+    x_coords = numpy.round(numpy.linspace(x1, x2, length)).astype(int)
+    y_coords = numpy.round(numpy.linspace(y1, y2, length)).astype(int)
 
     # Фильтруем точки, которые находятся внутри границ изображения
     valid_indices = (0 <= y_coords) & (y_coords < height) & (0 <= x_coords) & (x_coords < width)
