@@ -4,6 +4,9 @@ from numpy import frombuffer, uint8, zeros, full, cumsum, mean
 :param frombuffer - создание NumPy массива из байтовой строки
 :param uint8 - беззнаковое 8 байтовое целочисленное число NumPy
 :param zeros - заполнение массива нулями
+:param full - заполняет массив нужным типом данных
+:param cumsum - возвращает массив с данными, где каждый элемент является суммой предыдущего
+:param mean - среднее арифметическое элементов массива
 """
 
 # os - модуля для взаимосвязи с компьютером
@@ -165,12 +168,12 @@ def compression(arr, horizontally, vertically):
     x_factors[:width % horizontally] += 1
     y_factors[:height % vertically] += 1
 
-    # Создаём новый массив, в котором будет конечный результат
-    new_arr = zeros((vertically, horizontally, 3), dtype=uint8)
-
     # Вычисление индексов для получения блоков изображения
     x_indexes = cumsum([0] + x_factors.tolist())
     y_indexes = cumsum([0] + y_factors.tolist())
+
+    # Создаём новый массив, в котором будет конечный результат
+    new_arr = zeros((vertically, horizontally, 3), dtype=uint8)
 
     # Поблочная обработка
     for y in range(vertically):
@@ -182,11 +185,7 @@ def compression(arr, horizontally, vertically):
             sum_colors = mean(block, axis=(0, 1))
 
             # Если меньше синего, то закрашиваем в чёрный
-            if mean(sum_colors) < 127.5:
-                new_arr[y, x] = (0, 0, 0)
-            # Иначе в белый
-            else:
-                new_arr[y, x] = (255, 255, 255)
+            new_arr[y, x] = (255, 255, 255) if mean(sum_colors) >= 127.5 else (0, 0, 0)
 
     # Возвращаем сжатое изображение
     return new_arr
