@@ -189,3 +189,23 @@ def compression(arr, horizontally, vertically):
 
     # Возвращаем сжатое изображение
     return new_arr
+
+
+def simplify(arr, factor=127.5):
+    """
+    Преобразование изображения в чёрно-белое
+    :param arr: исходное изображение
+    :param factor: пороговое значение для бинаризации
+    :return: чёрно-белое изображение
+    """
+    # Средняя яркость для каждого пикселя
+    brightness = mean(arr, axis=2)
+
+    # Трёхканальный результат
+    result = zeros((*brightness.shape, 3), dtype=uint8)
+
+    # Бинаризация для всех трёх каналов одновременно
+    result[:, :, :] = 255 * (brightness >= factor)[:, :, None]
+
+    # Возвращаем чёрно-белое изображение
+    return result
