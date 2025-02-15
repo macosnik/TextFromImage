@@ -209,3 +209,50 @@ def simplify(arr, factor=127.5):
 
     # Возвращаем чёрно-белое изображение
     return result
+
+
+import numpy as np
+
+
+def draw_line(image, x1, y1, x2, y2, color):
+    """
+    Рисует прямую на рисунке
+    :param image: изображение
+    :param x1: координата начальной точки по горизонтали
+    :param y1: координата начальной точки по вертикали
+    :param x2: координата конечной точки по горизонтали
+    :param y2: координата конечной точки по вертикали
+    :param color: цвет линии в формате RGB
+    :return: изображение с нарисованной линией
+    """
+    # Параметры ширины и высоты изображения
+    height, width, _ = image.shape
+    
+    # Отзеркаливаем начало точек координат по вертикали
+    y1 = height - y1
+    y2 = height - y2
+
+    # Вычисляем разницу по x и y
+    delta_x = x2 - x1
+    delta_y = y2 - y1
+
+    # Находим длину линии
+    length = max(abs(delta_x), abs(delta_y))  # Используем Bresenham-like подход
+
+    if length == 0:
+        # Если длина равна нулю, просто закрашиваем одну точку
+        if 0 <= y1 < height and 0 <= x1 < width:
+            image[y1, x1] = color
+        return image
+
+    # Генерируем координаты точек вдоль линии
+    x_coords = np.round(np.linspace(x1, x2, length)).astype(int)
+    y_coords = np.round(np.linspace(y1, y2, length)).astype(int)
+
+    # Фильтруем точки, которые находятся внутри границ изображения
+    valid_indices = (0 <= y_coords) & (y_coords < height) & (0 <= x_coords) & (x_coords < width)
+
+    # Закрашиваем пиксели
+    image[y_coords[valid_indices], x_coords[valid_indices]] = color
+
+    return image
