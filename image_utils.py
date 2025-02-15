@@ -255,4 +255,5 @@ def draw_line(image, x1, y1, x2, y2, color):
     # Закрашиваем пиксели
     image[y_coords[valid_indices], x_coords[valid_indices]] = color
 
+    # Возвращаем изображение с линией
     return image
