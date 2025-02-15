@@ -89,19 +89,16 @@ def load(file_name):
 
 def save(arr, file_name):
     """
-
-    :param arr:
-    :param file_name:
-    :return:
+    Сохранение изображения
+    :param arr: изображение
+    :param file_name: Имя файла
+    :return: ничего
     """
-
+    # Получаем размеры изображения
     height, width, _ = arr.shape
 
-
+    # Рассчитываем размер строки с учётом смещения
     row_size = (width * 3 + 3) & ~3
-
-
-    padding = row_size - width * 3
 
 
     pixels_size = row_size * height
