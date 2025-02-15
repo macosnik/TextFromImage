@@ -100,10 +100,10 @@ def save(arr, file_name):
     # Рассчитываем размер строки с учётом смещения
     row_size = (width * 3 + 3) & ~3
 
-
+    # Размер пиксельный данных
     pixels_size = row_size * height
 
-
+    # Размер файла
     data_size = 14 + 40 + 83 + pixels_size
 
     # Файловый заголовок (14 байт)
@@ -129,14 +129,18 @@ def save(arr, file_name):
     # Метаданные (83 байта)
     meta_data = bytearray(83)  # Заполняем нулями
 
+    # Создаём из rgb изображения rgb
     bgr_arr = arr[:, :, [2, 1, 0]]
 
+    # Создаём массив и выравниваем каждую строку
     padded_arr = zeros((height, row_size), dtype=uint8)
     padded_arr[:, :width * 3] = bgr_arr.reshape(height, width * 3)
 
+    # Преобразуем массив в битовый вид
     pixels_data = padded_arr.tobytes()
 
     with open(file_name, 'wb') as file:
+        # Записываем все данные
         file.write(file_header)
         file.write(info_header)
         file.write(meta_data)
@@ -161,4 +165,8 @@ def compression(arr, horizontally, vertically):
     x_factors[:width % horizontally] += 1
     y_factors[:height % vertically] += 1
 
+    # Создаём новый массив, в котором будет конечный результат
+    new_arr = zeros((vertically, horizontally, 3), dtype=uint8)
+
+    #
 
