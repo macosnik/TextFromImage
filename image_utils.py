@@ -1,5 +1,5 @@
 # NumPy - быстрая работа с массивами(значительно ускорит алгоритмы)
-from numpy import frombuffer, uint8, zeros
+from numpy import frombuffer, uint8, zeros, full, cumsum, mean
 """
 :param frombuffer - создание NumPy массива из байтовой строки
 :param uint8 - беззнаковое 8 байтовое целочисленное число NumPy
@@ -144,5 +144,24 @@ def save(arr, file_name):
         file.write(info_header)
         file.write(meta_data)
         file.write(pixels_data)
+
+def compression(arr, horizontally, vertically):
+    """
+    Сжимание изображения
+    :param arr: изображение
+    :param horizontally: желаемый размер стороны по вертикали
+    :param vertically: желаемый размер стороны по горизонтали
+    :return: изображение
+    """
+    # Находим высоту и ширину изображения
+    height, width, _ = arr.shape
+
+    # Создаём массивы с указанием размеров блоков: по горизонтали и вертикали. Заполняем его числами полученными в результате деления исходно1 на желаемую стороны изображения
+    x_factors =  full(horizontally, width // horizontally)
+    y_factors = full(vertically, height // vertically)
+
+    # Остаток раскидываем по массиву указаний размеров блоков
+    x_factors[:width % horizontally] += 1
+    y_factors[:height % vertically] += 1
 
 
