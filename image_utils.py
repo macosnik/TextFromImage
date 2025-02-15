@@ -1,5 +1,5 @@
 # NumPy - быстрая работа с массивами(значительно ускорит алгоритмы)
-from numpy import frombuffer, uint8, zeros, full, cumsum, mean
+from numpy import frombuffer, uint8, zeros, full, cumsum, mean, linspace, round as round_numpy
 """
 :param frombuffer - создание NumPy массива из байтовой строки
 :param uint8 - беззнаковое 8 байтовое целочисленное число NumPy
@@ -190,7 +190,6 @@ def compression(arr, horizontally, vertically):
     # Возвращаем сжатое изображение
     return new_arr
 
-
 def simplify(arr, factor=127.5):
     """
     Преобразование изображения в чёрно-белое
@@ -209,10 +208,6 @@ def simplify(arr, factor=127.5):
 
     # Возвращаем чёрно-белое изображение
     return result
-
-
-import numpy as np
-
 
 def draw_line(image, x1, y1, x2, y2, color):
     """
@@ -246,8 +241,8 @@ def draw_line(image, x1, y1, x2, y2, color):
         return image
 
     # Генерируем координаты точек вдоль линии
-    x_coords = np.round(np.linspace(x1, x2, length)).astype(int)
-    y_coords = np.round(np.linspace(y1, y2, length)).astype(int)
+    x_coords = round_numpy(linspace(x1, x2, length)).astype(int)
+    y_coords = round_numpy(linspace(y1, y2, length)).astype(int)
 
     # Фильтруем точки, которые находятся внутри границ изображения
     valid_indices = (0 <= y_coords) & (y_coords < height) & (0 <= x_coords) & (x_coords < width)
