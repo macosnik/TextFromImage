@@ -168,5 +168,25 @@ def compression(arr, horizontally, vertically):
     # Создаём новый массив, в котором будет конечный результат
     new_arr = zeros((vertically, horizontally, 3), dtype=uint8)
 
-    #
+    # Вычисление индексов для получения блоков изображения
+    x_indexes = cumsum([0] + x_factors.tolist())
+    y_indexes = cumsum([0] + y_factors.tolist())
 
+    # Поблочная обработка
+    for y in range(vertically):
+        for x in range(horizontally):
+            # Собираем все цвета с изображения в пределе между ближайшими индексами в массиве
+            block = arr[y_indexes[y]:y_indexes[y + 1], x_indexes[x]:x_indexes[x + 1]]
+
+            # Сумма цветов в блоке
+            sum_colors = mean(block, axis=(0, 1))
+
+            # Если меньше синего, то закрашиваем в чёрный
+            if mean(sum_colors) < 127.5:
+                new_arr[y, x] = (0, 0, 0)
+            # Иначе в белый
+            else:
+                new_arr[y, x] = (255, 255, 255)
+
+    # Возвращаем сжатое изображение
+    return new_arr
