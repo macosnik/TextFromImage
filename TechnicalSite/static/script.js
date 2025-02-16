@@ -1,7 +1,7 @@
-// Получение элемента canvas по его id
+// Получение элемента холста по его id
 const canvas = document.getElementById('drawingCanvas');
 
-// Получение контекста для рисования canvas как 2d
+// Получение контекста для рисования 2d холста
 const wayDrawing = canvas.getContext('2d');
 
 // Вводим переменную для отслеживания рисования
@@ -28,23 +28,35 @@ function endDrawing() {
     wayDrawing.beginPath();
 }
 
-// Функция для рисования на canvas
+// Рисование на холсте
 function draw(e) {
-    if (!drawing) return; // Если не рисуем, выходим из функции
+    // Если не рисуем, выходим
+    if (!drawing) {
+        return;
+    }
 
-    wayDrawing.lineWidth = brushSize; // Устанавливаем толщину линии
-    wayDrawing.lineCap = 'round'; // Устанавливаем закругление концов линий
-    wayDrawing.strokeStyle = 'black'; // Устанавливаем цвет линии
+    // Устанавливаем толщину линии
+    wayDrawing.lineWidth = brushSize;
 
-    // Получаем размеры canvas относительно окна
+    // Устанавливаем закругление концов линий
+    wayDrawing.lineCap = 'round';
+
+    // Устанавливаем цвет линии
+    wayDrawing.strokeStyle = 'black';
+
+    // Получаем размеры холста относительно окна
     const rect = canvas.getBoundingClientRect();
 
-    // Переменные для координат
+    // Объявляем координаты
     let x, y;
+
+    // Если это событие касания, берем координаты первого касания
     if (e.touches) {
-        // Если это событие касания, берем координаты первого касания
-        x = e.touches[0].clientX - rect.left; // Вычисляем координату X
-        y = e.touches[0].clientY - rect.top; // Вычисляем координату Y
+        // Вычисляем координату X
+        x = e.touches[0].clientX - rect.left;
+
+        // Вычисляем координату Y
+        y = e.touches[0].clientY - rect.top;
     } else {
         // Если это событие мыши, берем координаты мыши
         x = e.clientX - rect.left; // Вычисляем координату X
@@ -96,7 +108,7 @@ document.getElementById('saveButton').addEventListener('click', () => {
     // Копируем содержимое оригинального canvas на временный canvas
     tempCtx.drawImage(canvas, 0, 0);
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // Очищаем оригинальный canvas
+    wayDrawing.clearRect(0, 0, canvas.width, canvas.height); // Очищаем оригинальный canvas
 
     // Получаем данные изображения в формате PNG
     const imageData = tempCanvas.toDataURL('image/png');
