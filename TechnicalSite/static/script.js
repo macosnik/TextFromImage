@@ -1,9 +1,18 @@
 const canvas = document.getElementById('drawingCanvas');
 const ctx = canvas.getContext('2d');
 
-// Установка размеров холста
-canvas.width = 500;
-canvas.height = 500;
+// Функция для установки размеров холста
+function setCanvasSize() {
+    const size = Math.min(window.innerWidth, window.innerHeight) * 0.9; // 90% от минимального значения
+    canvas.width = size;
+    canvas.height = size;
+}
+
+// Устанавливаем размеры холста при загрузке страницы
+setCanvasSize();
+
+// Обновляем размеры холста при изменении размеров окна
+window.addEventListener('resize', setCanvasSize);
 
 let isDrawing = false;
 let lastX = 0;

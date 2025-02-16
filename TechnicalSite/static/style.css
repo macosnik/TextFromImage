@@ -1,11 +1,29 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    margin-top: 50px;
+    margin: 0; /* Убираем отступы по умолчанию */
+    padding: 0; /* Убираем отступы по умолчанию */
+    height: 100vh; /* Высота body равна высоте окна браузера */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0; /* Фон для красоты */
+    overflow: hidden; /* Убираем скроллинг */
 }
 
 canvas {
     border: 1px solid black;
-    display: block;
-    margin: 0 auto;
+    background-color: white; /* Белый фон для холста */
+    width: 90vmin; /* Используем минимальное значение из ширины и высоты */
+    height: 90vmin; /* Холст будет квадратным */
+    max-width: 100%; /* Холст не выходит за пределы ширины экрана */
+    max-height: 100%; /* Холст не выходит за пределы высоты экрана */
+}
+
+button {
+    margin-top: 10px; /* Отступ кнопки от холста */
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
 }

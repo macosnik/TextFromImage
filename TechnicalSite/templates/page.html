@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta name="apple-mobile-web-app-capable" content="yes"> <!-- Включает режим автономного приложения -->
-    <meta name="apple-mobile-web-app-status-bar-style" content="black"> <!-- Устанавливает цвет строки состояния -->
-    <meta name="apple-mobile-web-app-title" content="TextFromImage"> <!-- Название, которое будет отображаться на главном экране -->
-    <link rel="apple-touch-icon" href="static/icon.png"> <!-- Иконка для главного экрана -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="TextFromImage">
+    <link rel="apple-touch-icon" href="static/icon.png">
     <title>Локальный сайт</title>
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> <!-- Подключение CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <h1>TextFromImage</h1>
     <canvas id="drawingCanvas"></canvas>
-    <button id="saveButton">Сохранить</button>
-
+    <div>
+        <button id="saveButton">Сохранить</button>
+        <button id="clearButton">Очистить</button>
+    </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
