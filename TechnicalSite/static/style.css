@@ -5,71 +5,70 @@ html, body {
     padding: 0; 
     background-color: #121212; 
     color: #ffffff; 
-    font-family: 'Roboto', sans-serif; /* Используем новый шрифт */
+    font-family: 'Roboto', sans-serif;
 }
 
 .container {
     background: #1e1e1e; 
-    border-radius: 12px; /* Увеличиваем радиус скругления */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Увеличиваем тень */
-    padding: 30px; /* Увеличиваем отступы */
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    padding: 30px;
     text-align: center;
     width: 100hv;
     max-width: 600px;
-    margin: auto; /* Центрируем контейнер */
+    margin: auto;
 }
 
 header {
-    margin-bottom: 30px; /* Увеличиваем отступ */
+    margin-bottom: 30px;
 }
 
 h1 {
     color: #ffffff; 
-    font-size: 2.5em; /* Увеличиваем размер заголовка */
+    font-size: 2.5em;
 }
 
 canvas {
     border: 1px solid #ccc; 
-    border-radius: 8px; /* Увеличиваем радиус скругления */
+    border-radius: 8px;
     background-color: #1e1e1e;
     touch-action: none;
     width: 100%;
     height: auto;
 }
 
-/* Стили для выпадающего списка */
 select {
-    background-color: #2a2a2a; /* Темный фон */
-    color: #ffffff; /* Белый текст */
-    border: 1px solid #007bff; /* Синяя рамка */
-    border-radius: 6px; /* Скругление углов */
-    padding: 10px; /* Отступы */
-    font-size: 16px; /* Размер шрифта */
+    background-color: #2a2a2a;
+    color: #ffffff;
+    border: 1px solid #007bff;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 16px;
     text-align: center;
-    appearance: none; /* Убираем стандартный стиль */
-    cursor: pointer; /* Курсор в виде указателя */
-    transition: background-color 0.3s, border-color 0.3s; /* Плавный переход */
+    appearance: none;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
 }
 
 select:hover {
-    background-color: #1e1e1e; /* Изменение фона при наведении */
-    border-color: #0056b3; /* Изменение цвета рамки при наведении */
+    background-color: #1e1e1e;
+    border-color: #0056b3;
 }
 
 label {
-    margin-right: 10px; /* Добавляем отступ справа */
+    margin-right: 10px;
 }
 
 button {
     background-color: #007bff; 
     color: white;
     border: none;
-    border-radius: 6px; /* Увеличиваем радиус скругления */
-    padding: 12px 20px; /* Увеличиваем отступы */
-    font-size: 16px; /* Размер шрифта */
+    border-radius: 6px;
+    padding: 12px 20px;
+    font-size: 16px;
     cursor: pointer;
     margin: 5px;
-    transition: background-color 0.3s, transform 0.2s; /* Добавляем анимацию */
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 button:hover {
