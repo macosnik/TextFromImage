@@ -31,7 +31,7 @@ h1 {
 canvas {
     border: 1px solid #ccc; 
     border-radius: 8px; /* Увеличиваем радиус скругления */
-    background-color: #ffffff; 
+    background-color: #1e1e1e;
     touch-action: none;
     width: 100%;
     height: auto;
@@ -56,11 +56,6 @@ select:hover {
     border-color: #0056b3; /* Изменение цвета рамки при наведении */
 }
 
-/* Добавление стрелки для выпадающего списка */
-.controls {
-    position: relative; /* Для позиционирования стрелки */
-}
-
 label {
     margin-right: 10px; /* Добавляем отступ справа */
 }
@@ -78,9 +73,5 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3; 
-    transform: translateY(-2px); /* Поднимаем кнопку при наведении */
+    background-color: #0056b3;
 }
-
-button:active {
-    transform:

@@ -42,7 +42,7 @@ function draw(e) {
     wayDrawing.lineCap = 'round';
 
     // Устанавливаем цвет линии
-    wayDrawing.strokeStyle = 'black';
+    wayDrawing.strokeStyle = 'white';
 
     // Получаем размеры холста относительно окна
     const rect = canvas.getBoundingClientRect();
@@ -134,7 +134,7 @@ document.getElementById('saveButton').addEventListener('click', () => {
     tempCanvas.height = canvas.height;
 
     // Белый фон на временном холсте
-    tempCtx.fillStyle = 'white'; // Устанавливаем цвет фона
+    tempCtx.fillStyle = 'black'; // Устанавливаем цвет фона
 
     // Заполняем фон белым цветом
     tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
