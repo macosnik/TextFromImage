@@ -4,6 +4,8 @@ body {
     margin-top: 50px;
 }
 
-h1 {
-    color: #333;
+canvas {
+    border: 1px solid black;
+    display: block;
+    margin: 0 auto;
 }
