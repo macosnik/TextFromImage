@@ -1,6 +1,11 @@
-from flask import Flask, render_template, request, jsonify  # Flask и компоненты для веб-приложения
-from os import path, listdir, makedirs  # Работа с файловой системой
-from base64 import b64decode  # Декодирование base64
+# Flask и компоненты для веб-приложения
+from flask import Flask, render_template, request, jsonify
+
+# Работа с файловой системой
+from os import path, listdir, makedirs
+
+# Декодирование base64
+from base64 import b64decode
 
 # Создание Flask приложения
 app = Flask(__name__)
