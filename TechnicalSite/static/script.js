@@ -145,23 +145,34 @@ document.getElementById('saveButton').addEventListener('click', () => {
     // Очищаем оригинальный холст
     wayDrawing.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Получаем данные изображения в формате PNG
+    // Данные изображения в формате PNG
     const imageData = tempCanvas.toDataURL('image/png');
-    // Отправляем данные изображения на сервер
+    // Отправляем данные изображения на компьютер
     fetch('/save-image', {
-        method: 'POST', // Указываем метод запроса
+        // Указываем метод запроса
+        method: 'POST',
+
         headers: {
-            'Content-Type': 'application/json', // Указываем тип содержимого
+            // Указываем тип содержимого
+            'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ image: imageData }), // Преобразуем данные изображения в JSON-формат
+
+        // Преобразуем данные изображения в JSON-формат
+        body: JSON.stringify({ image: imageData }),
     })
-    .then(response => response.json()) // Обрабатываем ответ от сервера, ожидая JSON
+
+    // Обрабатываем ответ от сервера, ожидая JSON
+    .then(response => response.json())
     .then(data => {
-        if (data.success == false) { // Проверяем, успешен ли ответ
-            alert('Ошибка при сохранении изображения.'); // Если нет, выводим сообщение об ошибке
+        // Проверяем, успешен ли ответ
+        if (!data.success) {
+            // Если нет, выводим сообщение об ошибке
+            alert('Ошибка при сохранении изображения.');
         }
     })
+
     .catch(error => {
-        console.error('Ошибка:', error); // Логируем ошибку в консоль, если произошла ошибка
+        // Сообщаем ошибку в консоль, если произошла ошибка
+        console.error('Ошибка:', error);
     });
 });
