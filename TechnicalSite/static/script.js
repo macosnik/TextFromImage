@@ -85,52 +85,65 @@ function draw(e) {
     wayDrawing.moveTo(x, y);
 }
 
-// Обработчики событий для мыши:
+// События для мыши:
 
-// Начало рисования при нажатии кнопки мыши
+// Рисование при нажатии кнопки мыши
 canvas.addEventListener('mousedown', startDrawing);
 
-// Окончание рисования при отпускании кнопки мыши
+// Рисования при отпускании кнопки мыши
 canvas.addEventListener('mouseup', endDrawing);
 
 // Рисование при движении мыши
 canvas.addEventListener('mousemove', draw);
 
-// Обработчики событий для касания:
+// События для касания:
 
-// Начало рисования при касании
+// Рисование при касании
 canvas.addEventListener('touchstart', startDrawing);
 
-// Окончание рисования при отпускании касания
+// Рисование при отпускании касания
 canvas.addEventListener('touchend', endDrawing);
-canvas.addEventListener('touchmove', draw); // Рисование при движении касания
 
-// Обработчик изменения толщины кисти
+// Рисование при движении касания
+canvas.addEventListener('touchmove', draw);
+
+// Изменения толщины кисти
 document.getElementById('brushThickness').addEventListener('change', (e) => {
-    brushSize = parseInt(e.target.value); // Обновляем толщину кисти на основе выбранного значения
+    // Обновление толщины кисти
+    brushSize = parseInt(e.target.value);
 });
 
 // Очистка холста
 document.getElementById('clearButton').addEventListener('click', () => {
-    wayDrawing.clearRect(0, 0, canvas.width, canvas.height); // Очищаем весь холст
+    // Очищаем холст
+    wayDrawing.clearRect(0, 0, canvas.width, canvas.height);
 });
 
 // Сохранение изображения
 document.getElementById('saveButton').addEventListener('click', () => {
-    // Создаем временный canvas для сохранения изображения
+    // Создаем временный холст
     const tempCanvas = document.createElement('canvas');
+
+    // Для нового холста задаём 2d пространство
     const tempCtx = tempCanvas.getContext('2d');
-    tempCanvas.width = canvas.width; // Устанавливаем ширину временного canvas
-    tempCanvas.height = canvas.height; // Устанавливаем высоту временного canvas
 
-    // Рисуем белый фон на временном canvas
+    // Устанавливаем ширину временного холста
+    tempCanvas.width = canvas.width;
+
+    // Устанавливаем высоту временного холста
+    tempCanvas.height = canvas.height;
+
+    // Белый фон на временном холсте
     tempCtx.fillStyle = 'white'; // Устанавливаем цвет фона
-    tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height); // Заполняем фон белым цветом
 
-    // Копируем содержимое оригинального canvas на временный canvas
+    // Заполняем фон белым цветом
+    tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+
+    // Копируем содержимое оригинального холста на временный холст
     tempCtx.drawImage(canvas, 0, 0);
 
-    wayDrawing.clearRect(0, 0, canvas.width, canvas.height); // Очищаем оригинальный canvas
+    // Очищаем оригинальный холст
+    wayDrawing.clearRect(0, 0, canvas.width, canvas.height);
 
     // Получаем данные изображения в формате PNG
     const imageData = tempCanvas.toDataURL('image/png');
