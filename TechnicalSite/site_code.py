@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify
-import os
-import base64
+from os import path, listdir, makedirs
+from base64 import b64decode
 
 app = Flask(__name__)
 
@@ -18,17 +18,17 @@ def save_image():
         folder = data.get('folder', 'tests')
 
         # Создаем целевую папку
-        target_folder = os.path.join(UPLOAD_FOLDER, folder)
-        os.makedirs(target_folder, exist_ok=True)
+        target_folder = path.join(UPLOAD_FOLDER, folder)
+        makedirs(target_folder, exist_ok=True)
 
-        num_picture = len(os.listdir(target_folder)) + 1
+        num_picture = len(listdir(target_folder)) + 1
 
         name_file = f'{target_folder[target_folder.rfind("/") + 1:]}_{num_picture}.png'
 
         # Сохраняем изображение
-        file_path = os.path.join(target_folder, name_file)
+        file_path = path.join(target_folder, name_file)
         with open(file_path, 'wb') as f:
-            f.write(base64.b64decode(data['image'].split(',')[1]))
+            f.write(b64decode(data['image'].split(',')[1]))
 
         return jsonify({'success': True})
 
