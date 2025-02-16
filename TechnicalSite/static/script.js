@@ -57,30 +57,52 @@ function draw(e) {
 
         // Вычисляем координату Y
         y = e.touches[0].clientY - rect.top;
-    } else {
-        // Если это событие мыши, берем координаты мыши
-        x = e.clientX - rect.left; // Вычисляем координату X
-        y = e.clientY - rect.top; // Вычисляем координату Y
+    }
+
+    // Иначе если это событие мыши, берем координаты мыши
+    else {
+        // Вычисляем координату X
+        x = e.clientX - rect.left;
+
+        // Вычисляем координату Y
+        y = e.clientY - rect.top;
     }
 
     // Масштабируем координаты для корректного отображения
     x *= (canvas.width / rect.width);
     y *= (canvas.height / rect.height);
 
-    wayDrawing.lineTo(x, y); // Рисуем линию до новых координат
-    wayDrawing.stroke(); // Применяем рисование
-    wayDrawing.beginPath(); // Начинаем новый путь
-    wayDrawing.moveTo(x, y); // Перемещаем "перо" в новые координаты
+    // Рисуем линию до новых координат
+    wayDrawing.lineTo(x, y);
+
+    // Применяем рисование
+    wayDrawing.stroke();
+
+    // Начинаем новый путь
+    wayDrawing.beginPath();
+
+    // Перемещаем курсор в новые координаты
+    wayDrawing.moveTo(x, y);
 }
 
-// Обработчики событий для мыши
-canvas.addEventListener('mousedown', startDrawing); // Начало рисования при нажатии кнопки мыши
-canvas.addEventListener('mouseup', endDrawing); // Окончание рисования при отпускании кнопки мыши
-canvas.addEventListener('mousemove', draw); // Рисование при движении мыши
+// Обработчики событий для мыши:
 
-// Обработчики событий для касания
-canvas.addEventListener('touchstart', startDrawing); // Начало рисования при касании
-canvas.addEventListener('touchend', endDrawing); // Окончание рисования при отпускании касания
+// Начало рисования при нажатии кнопки мыши
+canvas.addEventListener('mousedown', startDrawing);
+
+// Окончание рисования при отпускании кнопки мыши
+canvas.addEventListener('mouseup', endDrawing);
+
+// Рисование при движении мыши
+canvas.addEventListener('mousemove', draw);
+
+// Обработчики событий для касания:
+
+// Начало рисования при касании
+canvas.addEventListener('touchstart', startDrawing);
+
+// Окончание рисования при отпускании касания
+canvas.addEventListener('touchend', endDrawing);
 canvas.addEventListener('touchmove', draw); // Рисование при движении касания
 
 // Обработчик изменения толщины кисти
