@@ -7,7 +7,7 @@ app = Flask(__name__)
 @app.route('/')
 def home():
     # Возвращаем HTML с текстом "TextFromImage"
-    return open('technical_website.html')
+    return open('html.html')
 
 # Запускаем приложение
 if __name__ == '__main__':
