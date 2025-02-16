@@ -119,8 +119,9 @@ document.getElementById('clearButton').addEventListener('click', () => {
     wayDrawing.clearRect(0, 0, canvas.width, canvas.height);
 });
 
-// Сохранение изображения
 document.getElementById('saveButton').addEventListener('click', () => {
+    const folder = document.getElementById('folderSelect').value;
+
     // Создаем временный холст
     const tempCanvas = document.createElement('canvas');
 
@@ -147,32 +148,14 @@ document.getElementById('saveButton').addEventListener('click', () => {
 
     // Данные изображения в формате PNG
     const imageData = tempCanvas.toDataURL('image/png');
+
     // Отправляем данные изображения на компьютер
     fetch('/save-image', {
-        // Указываем метод запроса
         method: 'POST',
-
-        headers: {
-            // Указываем тип содержимого
-            'Content-Type': 'application/json',
-        },
-
-        // Преобразуем данные изображения в JSON-формат
-        body: JSON.stringify({ image: imageData }),
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            image: imageData,
+            folder: folder // Добавляем выбранную папку
+        }),
     })
-
-    // Обрабатываем ответ от сервера, ожидая JSON
-    .then(response => response.json())
-    .then(data => {
-        // Проверяем, успешен ли ответ
-        if (!data.success) {
-            // Если нет, выводим сообщение об ошибке
-            alert('Ошибка при сохранении изображения.');
-        }
-    })
-
-    .catch(error => {
-        // Сообщаем ошибку в консоль, если произошла ошибка
-        console.error('Ошибка:', error);
-    });
 });

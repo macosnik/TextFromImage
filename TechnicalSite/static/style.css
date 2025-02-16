@@ -84,3 +84,10 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+/* Стили для выпадающего списка выбора папки */
+#folderSelect {
+    margin-right: 10px;
+    text-align: center;
+    /* Остальные стили аналогичны другим select */
+}
