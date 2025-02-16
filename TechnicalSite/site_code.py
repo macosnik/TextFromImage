@@ -21,8 +21,12 @@ def save_image():
         target_folder = os.path.join(UPLOAD_FOLDER, folder)
         os.makedirs(target_folder, exist_ok=True)
 
+        num_picture = len(os.listdir(target_folder)) + 1
+
+        name_file = f'{target_folder[target_folder.rfind("/") + 1:]}_{num_picture}.png'
+
         # Сохраняем изображение
-        file_path = os.path.join(target_folder, 'drawing.png')
+        file_path = os.path.join(target_folder, name_file)
         with open(file_path, 'wb') as f:
             f.write(base64.b64decode(data['image'].split(',')[1]))
 
