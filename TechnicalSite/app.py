@@ -20,6 +20,19 @@ def home():
     # Рендеринг html шаблона из папки templates
     return render_template('page.html')
 
+@app.route('/get-image-count')
+def get_image_count():
+    folder = request.args.get('folder', 'tests')
+    target_folder = path.join(UPLOAD_FOLDER, folder)
+    if not path.exists(target_folder):
+        return jsonify({'count': 0})
+    try:
+        count = len([f for f in listdir(target_folder) if path.isfile(path.join(target_folder, f))])
+        return jsonify({'count': count})
+    except Exception as e:
+        print(f"Error getting image count: {e}")
+        return jsonify({'count': 0})
+
 
 # Маршрут для сохранения изображений
 @app.route('/save-image', methods=['POST'])

@@ -85,6 +85,20 @@ function draw(e) {
     wayDrawing.moveTo(x, y);
 }
 
+// Функция для обновления счетчика изображений
+function updateImageCount() {
+    const folder = document.getElementById('folderSelect').value;
+
+    fetch(`/get-image-count?folder=${encodeURIComponent(folder)}`)
+        .then(response => response.json())
+
+        .then(data => {
+            document.getElementById('imageCount').textContent = data.count;
+        })
+
+        .catch(error => console.error('Error:', error));
+}
+
 // События для мыши:
 
 // Рисование при нажатии кнопки мыши
@@ -118,6 +132,12 @@ document.getElementById('clearButton').addEventListener('click', () => {
     // Очищаем холст
     wayDrawing.clearRect(0, 0, canvas.width, canvas.height);
 });
+
+// Обновляем счетчик при загрузке страницы
+document.addEventListener('DOMContentLoaded', updateImageCount);
+
+// Обновляем счетчик при изменении выбора папки
+document.getElementById('folderSelect').addEventListener('change', updateImageCount);
 
 document.getElementById('saveButton').addEventListener('click', () => {
     const folder = document.getElementById('folderSelect').value;
@@ -155,7 +175,15 @@ document.getElementById('saveButton').addEventListener('click', () => {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
             image: imageData,
-            folder: folder // Добавляем выбранную папку
+            folder: folder
         }),
     })
+
+    .then(response => {
+        if (response.ok) {
+            updateImageCount(); // Добавляем обновление счетчика
+        }
+    })
+
+    .catch(error => console.error('Error:', error));
 });

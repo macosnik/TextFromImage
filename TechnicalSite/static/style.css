@@ -91,3 +91,10 @@ button:hover {
     text-align: center;
     /* Остальные стили аналогичны другим select */
 }
+
+.image-count {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #ffffff;
+    font-size: 16px;
+}
