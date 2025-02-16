@@ -1,86 +1,86 @@
 /* Устанавливаем стили для html и body */
 html, body {
-    overflow: hidden; /* Отключаем прокрутку */
-    height: 100%; /* Задаем высоту 100% для body */
-    margin: 0; /* Убираем отступы */
-    padding: 0; /* Убираем внутренние отступы */
-    background-color: #121212; /* Темный фон для страницы */
-    color: #ffffff; /* Белый цвет текста */
-    font-family: 'Roboto', sans-serif; /* Шрифт Roboto */
+    overflow: hidden;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* Контейнер для содержимого приложения */
 .container {
-    background: #1e1e1e; /* Темный фон для контейнера */
-    border-radius: 12px; /* Закругленные углы */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Тень для контейнера */
-    padding: 30px; /* Внутренние отступы */
-    text-align: center; /* Центрируем текст */
-    width: 100hv; /* Ширина 100% (ошибка: должно быть 100%) */
-    max-width: 600px; /* Максимальная ширина контейнера */
-    margin: auto; /* Центрируем контейнер по горизонтали */
+    background: #1e1e1e;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    padding: 30px;
+    text-align: center;
+    width: 100hv;
+    max-width: 600px;
+    margin: auto;
 }
 
-/* Отступы для заголовка */
+
 header {
-    margin-bottom: 30px; /* Отступ снизу */
+    margin-bottom: 30px;
 }
 
 /* Стили для заголовка h1 */
 h1 {
-    color: #ffffff; /* Белый цвет текста заголовка */
-    font-size: 2.5em; /* Размер шрифта заголовка */
+    color: #ffffff;
+    font-size: 2.5em;
 }
 
 /* Стили для холста (canvas) */
 canvas {
-    border: 1px solid #ccc; /* Светло-серая рамка */
-    border-radius: 8px; /* Закругленные углы */
-    background-color: #1e1e1e; /* Темный фон для холста */
-    touch-action: none; /* Отключаем действия касания (для мобильных) */
-    width: 100%; /* Ширина 100% от родительского элемента */
-    height: auto; /* Автоматическая высота */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #1e1e1e;
+    touch-action: none;
+    width: 100%;
+    height: auto;
 }
 
 /* Стили для выпадающего списка (select) */
 select {
-    background-color: #2a2a2a; /* Темный фон для выпадающего списка */
-    color: #ffffff; /* Белый цвет текста */
-    border: 1px solid #007bff; /* Синяя рамка */
-    border-radius: 6px; /* Закругленные углы */
-    padding: 10px; /* Внутренние отступы */
-    font-size: 16px; /* Размер шрифта */
-    text-align: center; /* Центрируем текст */
-    appearance: none; /* Убираем стандартный стиль браузера */
-    cursor: pointer; /* Курсор в виде указателя */
-    transition: background-color 0.3s, border-color 0.3s; /* Плавный переход для фона и рамки */
+    background-color: #2a2a2a;
+    color: #ffffff;
+    border: 1px solid #007bff;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
+    appearance: none;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
 }
 
-/* Эффект при наведении на выпадающий список */
+
 select:hover {
-    background-color: #1e1e1e; /* Темный фон при наведении */
-    border-color: #0056b3; /* Изменение цвета рамки при наведении */
+    background-color: #1e1e1e;
+    border-color: #0056b3;
 }
 
 /* Стили для меток (label) */
 label {
-    margin-right: 10px; /* Отступ справа */
+    margin-right: 10px;
 }
 
 /* Стили для кнопок */
 button {
-    background-color: #007bff; /* Синяя кнопка */
-    color: white; /* Белый цвет текста */
-    border: none; /* Без рамки */
-    border-radius: 6px; /* Закругленные углы */
-    padding: 12px 20px; /* Внутренние отступы */
-    font-size: 16px; /* Размер шрифта */
-    cursor: pointer; /* Курсор в виде указателя */
-    margin: 5px; /* Отступы вокруг кнопки */
-    transition: background-color 0.3s, transform 0.2s; /* Плавный переход для фона и трансформации */
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 5px;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 /* Эффект при наведении на кнопки */
 button:hover {
-    background-color: #0056b3; /* Изменение цвета фона при наведении */
+    background-color: #0056b3;
 }
