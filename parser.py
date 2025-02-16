@@ -3,9 +3,9 @@ import time
 
 start = time.time()
 
-image = load('test.bmp')
+image = load('icon.png')
 image = simplify(image)
-# image = compression(image, 50, 50)
+image = compression(image, 180, 180)
 # image = draw_line(image, 100, 0, 1000, 500, (255, 0, 0))
 save(image, 'output.bmp')
 

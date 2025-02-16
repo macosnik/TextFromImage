@@ -6,3 +6,6 @@ class CharacterRecognition:
         self.hidden_layers = hidden_layers
         self.outputs = outputs
         self.learning_rate = learning_rate
+
+        
+
