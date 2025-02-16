@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 
 # Создаем экземпляр приложения Flask
 app = Flask(__name__)
@@ -7,7 +7,7 @@ app = Flask(__name__)
 @app.route('/')
 def home():
     # Возвращаем HTML с текстом "TextFromImage"
-    return open('html.html')
+    return render_template('page.html')
 
 # Запускаем приложение
 if __name__ == '__main__':
