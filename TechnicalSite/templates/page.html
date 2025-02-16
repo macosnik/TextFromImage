@@ -1,44 +1,83 @@
 <!DOCTYPE html>
+
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
+
+    <!-- Настройки для дизайна -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
+    <!-- Цвет темы для браузера -->
     <meta name="theme-color" content="#121212">
 
+    <!-- Веб-приложение может работать в полноэкранном режиме на айфонах -->
     <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- Название веб-приложения -->
     <meta name="apple-mobile-web-app-title" content="TextFromImage">
+
+    <!-- Стиль строки состояния для веб-приложения -->
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <!-- Указывает иконку приложения -->
     <link rel="apple-touch-icon" href="static/icon.png">
 
+    <!-- Заголовок страницы, отображаемый в браузере -->
     <title>TextFromImage</title>
+
+    <!-- Подключение файла стилей css -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Подключение шрифта Roboto -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
 </head>
+
 <body>
+    <!-- Контейнер для содержимого страницы -->
     <div class="container">
+
+        <!-- Заголовок приложения -->
         <header>
             <h1>TextFromImage</h1>
         </header>
+
         <main>
+            <!-- Холст для рисования -->
             <canvas id="drawingCanvas" width="500" height="500"></canvas>
+
+            <!-- Контейнер для элементов управления -->
             <div class="controls">
+
+                <!-- Кнопка для выбора толщины кисти -->
                 <label for="brushThickness">Толщина:</label>
+
+                <!-- Выпадающий список для выбора толщины кисти -->
                 <select id="brushThickness">
+                    <!-- Опции выбора толщины -->
                     <option value="35">35</option>
                     <option value="30">30</option>
                     <option value="25">25</option>
                     <option value="20">20</option>
                     <option value="15">15</option>
                 </select>
+
+                <!-- Кнопка для очистки холста -->
                 <button id="clearButton">Очистить</button>
+
+                <!-- Кнопка для сохранения холста -->
                 <button id="saveButton">Сохранить изображение</button>
             </div>
         </main>
+
         <footer>
+            <!-- Авторские права -->
             <p>&copy; 2025 Владимир Бубнов. Все права защищены.</p>
         </footer>
     </div>
+
+    <!-- Подключение файл JavaScript -->
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
