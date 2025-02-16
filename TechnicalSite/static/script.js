@@ -1,57 +1,70 @@
 const canvas = document.getElementById('drawingCanvas');
 const ctx = canvas.getContext('2d');
+let drawing = false;
 
-// Функция для установки размеров холста
-function setCanvasSize() {
-    const size = Math.min(window.innerWidth, window.innerHeight) * 0.9; // 90% от минимального значения
-    canvas.width = size;
-    canvas.height = size;
+// Функции для начала и окончания рисования
+function startDrawing(e) {
+    drawing = true;
+    draw(e);
 }
 
-// Устанавливаем размеры холста при загрузке страницы
-setCanvasSize();
+function endDrawing() {
+    drawing = false;
+    ctx.beginPath(); // Сбрасываем путь
+}
 
-// Обновляем размеры холста при изменении размеров окна
-window.addEventListener('resize', setCanvasSize);
-
-let isDrawing = false;
-let lastX = 0;
-let lastY = 0;
-
-// Обработка рисования
 function draw(e) {
-    if (!isDrawing) return; // Рисуем только при нажатии мыши
-    ctx.beginPath();
-    ctx.moveTo(lastX, lastY);
-    ctx.lineTo(e.offsetX, e.offsetY);
-    ctx.strokeStyle = '#000';
-    ctx.lineWidth = 5;
+    if (!drawing) return;
+
+    ctx.lineWidth = 5; // Толщина линии
+    ctx.lineCap = 'round'; // Закругление концов линий
+    ctx.strokeStyle = 'black'; // Цвет линии
+
+    // Получаем координаты касания или мыши
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left || e.touches[0].clientX - rect.left;
+    const y = e.clientY - rect.top || e.touches[0].clientY - rect.top;
+
+    ctx.lineTo(x, y);
     ctx.stroke();
-    [lastX, lastY] = [e.offsetX, e.offsetY];
+    ctx.beginPath();
+    ctx.moveTo(x, y);
 }
 
-// Слушатели событий
-canvas.addEventListener('mousedown', (e) => {
-    isDrawing = true;
-    [lastX, lastY] = [e.offsetX, e.offsetY];
-});
+// Обработчики событий для мыши
+canvas.addEventListener('mousedown', startDrawing);
+canvas.addEventListener('mouseup', endDrawing);
 canvas.addEventListener('mousemove', draw);
-canvas.addEventListener('mouseup', () => isDrawing = false);
-canvas.addEventListener('mouseout', () => isDrawing = false);
 
-// Обработка сохранения
-document.getElementById('saveButton').addEventListener('click', async () => {
-    const dataURL = canvas.toDataURL('image/png'); // Преобразуем холст в Base64
-    const response = await fetch('/save-image', {
+// Обработчики событий для касания
+canvas.addEventListener('touchstart', startDrawing);
+canvas.addEventListener('touchend', endDrawing);
+canvas.addEventListener('touchmove', draw);
+
+// Очистка холста
+document.getElementById('clearButton').addEventListener('click', () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+});
+
+// Сохранение изображения
+document.getElementById('saveButton').addEventListener('click', () => {
+    const imageData = canvas.toDataURL('image/png');
+    fetch('/save-image', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ image: dataURL })
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ image: imageData }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Изображение успешно сохранено!');
+        } else {
+            alert('Ошибка при сохранении изображения.');
+        }
+    })
+    .catch(error => {
+        console.error('Ошибка:', error);
     });
-    const result = await response.json();
-    if (result.success) {
-        alert('Изображение сохранено!');
-        ctx.clearRect(0, 0, canvas.width, canvas.height); // Очистка холста
-    } else {
-        alert('Ошибка сохранения.');
-    }
 });

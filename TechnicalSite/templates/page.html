@@ -3,19 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="TextFromImage">
-    <link rel="apple-touch-icon" href="static/icon.png">
-    <title>Локальный сайт</title>
+    <title>TextFromImage</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>TextFromImage</h1>
-    <canvas id="drawingCanvas"></canvas>
-    <div>
-        <button id="saveButton">Сохранить</button>
-        <button id="clearButton">Очистить</button>
+    <div class="container">
+        <header>
+            <h1>TextFromImage</h1>
+        </header>
+        <main>
+            <canvas id="drawingCanvas" width="500" height="500"></canvas>
+            <div class="buttons">
+                <button id="clearButton">Очистить</button>
+                <button id="saveButton">Сохранить изображение</button>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2023 Ваше имя. Все права защищены.</p>
+        </footer>
     </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
