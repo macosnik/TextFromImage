@@ -20,7 +20,7 @@ def home():
     # Рендеринг html шаблона из папки templates
     return render_template('page.html')
 
-@app.route('/get-image-count')
+@app.route('/get-image-count3')
 def get_image_count():
     folder = request.args.get('folder', 'tests')
     target_folder = path.join(UPLOAD_FOLDER, folder)
