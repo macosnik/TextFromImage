@@ -2,7 +2,7 @@
 from flask import Flask, render_template, request, jsonify
 
 # Работа с файловой системой
-from os import path, listdir, makedirs, getcwd
+from os import path, listdir, makedirs, getcwd, remove
 
 # Декодирование base64
 from base64 import b64decode
@@ -21,9 +21,11 @@ UPLOAD_FOLDER = '../BaseOfData'
 def photo_processing(name_file):
     image = image_utils.load(name_file)
 
-    image = image_utils.compression(image, 25, 25)
+    image = image_utils.compression(image, 32, 32)
 
     image_utils.save(image, f"{name_file[:-3]}bmp")
+
+    remove(name_file)
 
 # Маршрут для главной страницы
 @app.route('/')
