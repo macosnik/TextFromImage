@@ -2,10 +2,15 @@
 from flask import Flask, render_template, request, jsonify
 
 # Работа с файловой системой
-from os import path, listdir, makedirs
+from os import path, listdir, makedirs, getcwd
 
 # Декодирование base64
 from base64 import b64decode
+
+# Наш модуль для обработки изображений
+import image_utils
+
+import threading
 
 # Создание Flask приложения
 app = Flask(__name__)
@@ -13,6 +18,12 @@ app = Flask(__name__)
 # Путь для сохранения загруженных изображений
 UPLOAD_FOLDER = '../BaseOfData'
 
+def photo_processing(name_file):
+    image = image_utils.load(name_file)
+
+    image = image_utils.compression(image, 25, 25)
+
+    image_utils.save(image, f"{name_file[:-3]}bmp")
 
 # Маршрут для главной страницы
 @app.route('/')
@@ -66,6 +77,10 @@ def save_image():
 
             # Запись в файл
             f.write(b64decode(img_data))
+
+        all_path = f'{getcwd()[:getcwd().rfind('/')]}/{target_folder[3:]}/{name_file}'
+
+        threading.Thread(target=photo_processing, args=(all_path,)).start()
 
         # Возврат ответа
         return jsonify({'success': True})
