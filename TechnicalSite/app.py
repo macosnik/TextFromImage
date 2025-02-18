@@ -10,6 +10,7 @@ from base64 import b64decode
 # Наш модуль для обработки изображений
 import image_utils
 
+# Параллельный процесс
 import threading
 
 # Создание Flask приложения
