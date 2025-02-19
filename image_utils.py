@@ -59,8 +59,7 @@ class Image:
             file.write(data)
 
     def compression(self, horizontally, vertically):
-        # Будущее изображение
-        new_image = []
+        arr = []
 
         # Заполнение списка нулями, для дальнейшей работы с изображением
         for y in range(vertically):
@@ -72,7 +71,7 @@ class Image:
                 row.append(0)
 
             # Добавляем строку в изображение
-            new_image.append(row)
+            arr.append(row)
 
         # Списки с порядком размера ячеек: один - по горизонтали, второй - по вертикали
         x_factors = []
@@ -152,18 +151,18 @@ class Image:
                         pixel_color = self.arr[sum(y_factors[:y]) + y_pixels][sum(x_factors[:x]) + x_pixels]
 
                         # Суммируем все оттенки цветов нынешней зоны и сохраняем в изображение
-                        new_image[y][x] += pixel_color[0] + pixel_color[1] + pixel_color[2]
+                        arr[y][x] += pixel_color[0] + pixel_color[1] + pixel_color[2]
 
                 # Если при делении всех оттенков цветов в зоне на количество зон и количество оттенков в одном пикселе(3) получаем число меньше 127.5(половина от 225), то закрашиваем пиксель в чёрный
-                if new_image[y][x] / count_pixels / 3 < 127.5:
-                    new_image[y][x] = (0, 0, 0)
+                if arr[y][x] / count_pixels / 3 < 127.5:
+                    arr[y][x] = (0, 0, 0)
 
                 # Иначе закрашиваем в белый
                 else:
-                    new_image[y][x] = (255, 255, 255)
+                    arr[y][x] = (255, 255, 255)
 
         # Возвращаем новое изображение в формате rgb
-        self.arr = new_image
+        self.arr = arr
         self.width = horizontally
         self.height = vertically
 
