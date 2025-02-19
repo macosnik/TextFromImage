@@ -83,8 +83,10 @@ def save_image():
             # Запись в файл
             f.write(b64decode(img_data))
 
+        # Полный путь к файлу
         all_path = f'{os.getcwd()[:os.getcwd().rfind('/')]}/{target_folder[3:]}/{name_file}'
 
+        # Создаём процесс для обработки фотографии
         Thread(target=photo_processing, args=(all_path,)).start()
 
         # Возврат ответа
