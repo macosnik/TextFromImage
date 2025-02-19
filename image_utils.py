@@ -1,95 +1,30 @@
-# NumPy - быстрая работа с массивами(значительно ускорит алгоритмы)
-import numpy
-"""
-:param frombuffer - создание NumPy массива из байтовой строки
-:param uint8 - беззнаковое 8 байтовое целочисленное число NumPy
-:param zeros - заполнение массива нулями
-:param full - заполняет массив нужным типом данных
-:param cumsum - возвращает массив с данными, где каждый элемент является суммой предыдущего
-:param mean - среднее арифметическое элементов массива
-:param round - округление
-:param linspace - равномерное распределение чисел по массиву
-"""
-
-# os - модуля для взаимосвязи с компьютером
-from os import getcwd as path, listdir as path_obj
-"""
-:param path - функция для нахождения пути по компьютеру к данной директории
-:param path_obj - функция для нахождения всех папок и фалов по пути
-"""
-
-# subprocess - модуль для реализации компьютерных процессов
-from subprocess import run as terminal
-"""
-:param terminal - функция для обращения к терминалу
-"""
+import os
 
 def load(file_name):
-    """
-    Загрузка изображения для получения всех цветов пикселей
-    :param file_name: имя файла
-    :return: список пикселей rgb формата
-    """
-    # Если нынешний тип файла не bmp:
-    if file_name[-4:] != '.bmp':
-        # Вид будущего названия фала (bmp формат)
-        bmp_name = f"{file_name[:file_name.rfind('.')]}.bmp"
+    os.system(f"convert {file_name} -depth 24 -type TrueColor {file_name[:file_name.rfind('.')]}.bmp")
 
-        # Если в директории нет ожидаемого типа файла, то выполняем:
-        if bmp_name not in path_obj(path()):
-            # Нынешний тип файла конвертируем в ожидаемый тип
-            terminal(["convert", file_name, "-depth", "24", "-type", "TrueColor", bmp_name], check=True)
+    with open(f"{file_name[:file_name.rfind('.')]}.bmp", 'rb') as file:
+        data = file.read(54)
 
-        # Присваиваем нынешнему названию ожидаемое
-        file_name = bmp_name
+        distance_to_pixels = int.from_bytes(data[10:14], byteorder='little')
+        width = int.from_bytes(data[18:22], byteorder='little')
+        height = int.from_bytes(data[22:26], byteorder='little')
 
-    # Открываем файл
-    with open(file_name, 'rb') as file:
-        # Читаем первые 14 байтов (файловый заголовок файла)
-        file_header = file.read(14)
+        file.seek(distance_to_pixels)
 
-        # Если типом файла не является bmp, то сваливаем всё на ошибку в конвертации файла
-        if file_header[:2] != b'BM':
-            raise ValueError('Ошибка конвертации изображения')
+        row_size = (width * 3 + 3) // 4 * 4
+        arr = []
 
-        # Чтение расстояния в батах до данных пикселей (4 байта, начиная с 10 байта)
-        pixels_data_offset = int.from_bytes(file_header[10:14], byteorder='little')
+        data = file.read(row_size * height)
 
-        # Чтение информационного заголовка (40 байт)
-        info_header = file.read(40)
+        for y in range(height - 1, -1, -1):
+            row = []
+            for x in range(width):
+                index = y * row_size + x * 3
+                row.append((data[index + 2], data[index + 1], data[index]))
 
-        # Чтение высоты и ширина изображения (по 4 байта, начиная с 4 байта)
-        width = int.from_bytes(info_header[4:8], byteorder='little')
-        height = int.from_bytes(info_header[8:12], byteorder='little')
+            arr.append(row)
 
-        # Получение кол-ва байтов в палитре пикселя
-        bits_pixels = int.from_bytes(info_header[14:16], byteorder='little')
-
-        # Если байтовая палитра не является 24 битной, то сваливаем всё на ошибку в конвертации файла
-        if bits_pixels != 24:
-            raise ValueError('Ошибка конвертации изображения')
-
-        # Читаем оставшиеся байты до пикселей
-        file.seek(pixels_data_offset)
-
-        # Рассчитываем размер строки с учётом смещения
-        row_size = (width * 3 + 3) & ~3
-
-        # Чтение всех пикселей
-        arr_data = file.read(row_size * height)
-
-        # Создаю массив на основе всех пикселей в байтах. Тип чисел - беззнаковое 8 байтовое целочисленное
-        arr = numpy.frombuffer(arr_data, dtype=numpy.uint8)
-
-        # Сначала массив перестраивается в height количество первичных массивов в arr, затем в width количество двоичных массивов в каждом массиве первичного массива.
-        # Затем обрезаем вторичный массив до width * 3. (: - это все строки)
-        # Затем преобразовываем массив в трёхмерный, добавляя в троичный массив по 3 числа
-        arr = arr.reshape((height, row_size))[:, :width * 3].reshape(height, width, 3)
-
-        # Изменяем порядок троичных данных массива, переворачивая массив. Было BGR, а стало - RGB
-        arr = arr[:, :, [2, 1, 0]]
-
-        # Возвращаем массив
         return arr
 
 def save(arr, file_name):

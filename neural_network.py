@@ -6,5 +6,8 @@ class NeuralNetwork:
         self.hidden_layers = hidden_layers
         self.outputs = outputs
 
+
+
+
         
 
