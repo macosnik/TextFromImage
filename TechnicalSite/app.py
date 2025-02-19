@@ -38,22 +38,28 @@ def home():
 
 @app.route('/get-image-count')
 def get_image_count():
+    # Получение названия папки из javascript
     folder = request.args.get('folder', 'tests')
 
+    # Получаем путь к выбранной папке
     target_folder = os.path.join('../BaseOfData', folder)
 
+    #
     if not os.path.exists(target_folder):
         return jsonify({'count': 0})
 
     try:
-        count = len([f for f in os.listdir(target_folder) if os.path.isfile(os.path.join(target_folder, f))])
+        # Количество файлов в папке
+        count = len(os.listdir(target_folder))
 
+        # Отправляем количество файлов п папке
         return jsonify({'count': count})
 
     except Exception as e:
         # Выводим ошибку
         print(f"Error getting image count: {e}")
 
+        # Отправляем ошибку
         return jsonify({'count': 0})
 
 
