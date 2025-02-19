@@ -59,7 +59,76 @@ class Image:
             file.write(data)
 
     def compression(self, width, height):
-        pass
+        self.width = len(self.arr[0])
+        self.height = len(self.arr)
+
+        arr = []
+
+        for y in range(width):
+            row = []
+            for x in range(height):
+                row.append(0)
+            arr.append(row)
+
+        x_factors = []
+        y_factors = []
+
+        str_x = str(self.width / width)
+        str_y = str(self.height / height)
+
+        length_int_part_x = 0
+        length_int_part_y = 0
+
+        for i in str_x:
+            if i == '.':
+                break
+            else:
+                length_int_part_x += 1
+
+        for i in str_y:
+            if i == '.':
+                break
+            else:
+                length_int_part_y += 1
+
+        int_part_x = int(str_x[0:length_int_part_x])
+        int_part_y = int(str_y[0:length_int_part_y])
+
+        balance_x = self.width - width * int_part_x
+        balance_y = self.height - height * int_part_y
+
+        for i in range(width):
+            if balance_x != 0:
+                x_factors.append(int_part_x + 1)
+                balance_x -= 1
+            else:
+                x_factors.append(int_part_x)
+
+        for i in range(width):
+            if balance_y != 0:
+                y_factors.append(int_part_y + 1)
+                balance_y -= 1
+            else:
+                y_factors.append(int_part_y)
+
+        for y in range(width):
+            for x in range(height):
+                count_pixels = 0
+
+                for y_pixels in range(sum(y_factors[:y + 1]) - sum(y_factors[:y])):
+                    for x_pixels in range(sum(x_factors[:x + 1]) - sum(x_factors[:x])):
+                        count_pixels += 1
+
+                        pixel_color = self.arr[sum(y_factors[:y]) + y_pixels][sum(x_factors[:x]) + x_pixels]
+
+                        arr[y][x] += pixel_color[0] + pixel_color[1] + pixel_color[2]
+
+                if arr[y][x] / count_pixels / 3 < 127.5:
+                    arr[y][x] = (0, 0, 0)
+                else:
+                    arr[y][x] = (255, 255, 255)
+
+        self.arr = arr
 
     def simplify(self, factor=127.5):
         for y in range(self.height):
