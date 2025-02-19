@@ -44,10 +44,6 @@ def get_image_count():
     # Получаем путь к выбранной папке
     target_folder = os.path.join('../BaseOfData', folder)
 
-    #
-    if not os.path.exists(target_folder):
-        return jsonify({'count': 0})
-
     try:
         # Количество файлов в папке
         count = len(os.listdir(target_folder))
