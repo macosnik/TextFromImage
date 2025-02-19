@@ -1,9 +1,9 @@
-import os
+import os, math
 
-def load(file_name):
-    os.system(f"convert {file_name} -depth 24 -type TrueColor {file_name[:file_name.rfind('.')]}.bmp")
+def load(name):
+    os.system(f"convert {name} -depth 24 -type TrueColor {name[:name.rfind('.')]}.bmp")
 
-    with open(f"{file_name[:file_name.rfind('.')]}.bmp", 'rb') as file:
+    with open(f"{name[:name.rfind('.')]}.bmp", 'rb') as file:
         data = file.read(54)
 
         distance_to_pixels = int.from_bytes(data[10:14], byteorder='little')
@@ -22,7 +22,6 @@ def load(file_name):
             for x in range(width):
                 index = y * row_size + x * 3
                 row.append((data[index + 2], data[index + 1], data[index]))
-
             arr.append(row)
 
         return arr
@@ -30,10 +29,9 @@ def load(file_name):
 def save(arr, file_name):
     width = len(arr[0])
     height = len(arr)
-
     row_size = (width * 3 + 3) // 4 * 4
     pixels_size = row_size * height
-    padding = row_size - width * 3
+    remains = row_size - width * 3
     data_size = pixels_size + 54
 
     data = bytearray([
@@ -50,8 +48,7 @@ def save(arr, file_name):
     for y in range(height - 1, -1, -1):
         for x in range(width):
             data.extend([arr[y][x][2], arr[y][x][1], arr[y][x][0]])
-
-        data.extend([0] * padding)
+        data.extend([0] * remains)
 
     with open(file_name, 'wb') as file:
         file.write(data)
@@ -98,64 +95,26 @@ def compression(arr, horizontally, vertically):
     return new_arr
 
 def simplify(arr, factor=127.5):
-    """
-    Преобразование изображения в чёрно-белое
-    :param arr: исходное изображение
-    :param factor: пороговое значение для бинаризации
-    :return: чёрно-белое изображение
-    """
-    # Средняя яркость для каждого пикселя
-    brightness = numpy.mean(arr, axis=2)
+    for y in range(len(arr)):
+        for x in range(len(arr[0])):
+            if sum(arr[y][x]) / 3 >= factor:
+                arr[y][x] = (255, 255, 255)
+            else:
+                arr[y][x] = (0, 0, 0)
+    return arr
 
-    # Трёхканальный результат
-    result = numpy.zeros((*brightness.shape, 3), dtype=numpy.uint8)
+def draw_line(arr, x1, y1, x2, y2, color):
+    width = len(arr)
+    height = len(arr[0])
+    delta_x = abs(x1 - x2)
+    delta_y = abs(y1 - y2)
+    length = int(math.sqrt(delta_x ** 2 + delta_y ** 2))
 
-    # Бинаризация для всех трёх каналов одновременно
-    result[:, :, :] = 255 * (brightness >= factor)[:, :, None]
+    for i in range(length):
+        x = round(x1 + (x2 - x1) * i / length)
+        y = round(y1 + (y2 - y1) * i / length)
 
-    # Возвращаем чёрно-белое изображение
-    return result
+        if 0 <= y < height and 0 <= x < width:
+            arr[y][x] = color
 
-def draw_line(image, x1, y1, x2, y2, color):
-    """
-    Рисует прямую на рисунке
-    :param image: изображение
-    :param x1: координата начальной точки по горизонтали
-    :param y1: координата начальной точки по вертикали
-    :param x2: координата конечной точки по горизонтали
-    :param y2: координата конечной точки по вертикали
-    :param color: цвет линии в формате RGB
-    :return: изображение с нарисованной линией
-    """
-    # Параметры ширины и высоты изображения
-    height, width, _ = image.shape
-    
-    # Отзеркаливаем начало точек координат по вертикали
-    y1 = height - y1
-    y2 = height - y2
-
-    # Вычисляем разницу по x и y
-    delta_x = x2 - x1
-    delta_y = y2 - y1
-
-    # Находим длину линии
-    length = max(abs(delta_x), abs(delta_y))  # Используем Bresenham-like подход
-
-    if length == 0:
-        # Если длина равна нулю, просто закрашиваем одну точку
-        if 0 <= y1 < height and 0 <= x1 < width:
-            image[y1, x1] = color
-        return image
-
-    # Генерируем координаты точек вдоль линии
-    x_coords = numpy.round(numpy.linspace(x1, x2, length)).astype(int)
-    y_coords = numpy.round(numpy.linspace(y1, y2, length)).astype(int)
-
-    # Фильтруем точки, которые находятся внутри границ изображения
-    valid_indices = (0 <= y_coords) & (y_coords < height) & (0 <= x_coords) & (x_coords < width)
-
-    # Закрашиваем пиксели
-    image[y_coords[valid_indices], x_coords[valid_indices]] = color
-
-    # Возвращаем изображение с линией
-    return image
+    return arr
