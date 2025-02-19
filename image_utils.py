@@ -28,63 +28,33 @@ def load(file_name):
         return arr
 
 def save(arr, file_name):
-    """
-    Сохранение изображения
-    :param arr: изображение
-    :param file_name: Имя файла
-    :return: ничего
-    """
-    # Получаем размеры изображения
-    height, width, _ = arr.shape
+    width = len(arr[0])
+    height = len(arr)
 
-    # Рассчитываем размер строки с учётом смещения
-    row_size = (width * 3 + 3) & ~3
-
-    # Размер пиксельный данных
+    row_size = (width * 3 + 3) // 4 * 4
     pixels_size = row_size * height
+    padding = row_size - width * 3
+    data_size = pixels_size + 54
 
-    # Размер файла
-    data_size = 14 + 40 + 83 + pixels_size
-
-    # Файловый заголовок (14 байт)
-    file_header = bytearray([
-        0x42, 0x4D,  # bfType
-        data_size & 0xFF, (data_size >> 8) & 0xFF, (data_size >> 16) & 0xFF, (data_size >> 24) & 0xFF,  # bfSize
-        0, 0, 0, 0, 14 + 40 + 83, 0, 0, 0  # bfOffBits
-    ])
-
-    # Информационный заголовок (40 байт)
-    info_header = bytearray([
-        40, 0, 0, 0,  # biSize
-        width & 0xFF, (width >> 8) & 0xFF, (width >> 16) & 0xFF, (width >> 24) & 0xFF,  # biWidth
-        height & 0xFF, (height >> 8) & 0xFF, (height >> 16) & 0xFF, (height >> 24) & 0xFF,  # biHeight
-        1, 0,
-        24, 0,  # biBitCount
-        0, 0, 0, 0,
-        pixels_size & 0xFF, (pixels_size >> 8) & 0xFF, (pixels_size >> 16) & 0xFF,
-        (pixels_size >> 24) & 0xFF,  # biSizeImage
+    data = bytearray([
+        0x42, 0x4D,
+        data_size & 0xFF, (data_size >> 8) & 0xFF, (data_size >> 16) & 0xFF, (data_size >> 24) & 0xFF,
+        0, 0, 0, 0, 54, 0, 0, 0, 40, 0, 0, 0,
+        width & 0xFF, (width >> 8) & 0xFF, (width >> 16) & 0xFF, (width >> 24) & 0xFF,
+        height & 0xFF, (height >> 8) & 0xFF, (height >> 16) & 0xFF, (height >> 24) & 0xFF,
+        1, 0, 24, 0, 0, 0, 0, 0,
+        pixels_size & 0xFF, (pixels_size >> 8) & 0xFF, (pixels_size >> 16) & 0xFF, (pixels_size >> 24) & 0xFF,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     ])
 
-    # Метаданные (83 байта)
-    meta_data = bytearray(83)  # Заполняем нулями
+    for y in range(height - 1, -1, -1):
+        for x in range(width):
+            data.extend([arr[y][x][2], arr[y][x][1], arr[y][x][0]])
 
-    # Создаём из rgb изображения rgb
-    bgr_arr = arr[:, :, [2, 1, 0]]
-
-    # Создаём массив и выравниваем каждую строку
-    padded_arr = numpy.zeros((height, row_size), dtype=numpy.uint8)
-    padded_arr[:, :width * 3] = bgr_arr.reshape(height, width * 3)
-
-    # Преобразуем массив в битовый вид
-    pixels_data = padded_arr.tobytes()
+        data.extend([0] * padding)
 
     with open(file_name, 'wb') as file:
-        # Записываем все данные
-        file.write(file_header)
-        file.write(info_header)
-        file.write(meta_data)
-        file.write(pixels_data)
+        file.write(data)
 
 def compression(arr, horizontally, vertically):
     """
