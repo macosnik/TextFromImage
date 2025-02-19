@@ -7,7 +7,9 @@ class Image:
         self.height = None
         self.arr = None
 
-    def load(self):
+        self.__load__()
+
+    def __load__(self):
         os.system(f"convert {self.name} -depth 24 -type TrueColor {self.name[:self.name.rfind('.')]}.bmp")
 
         with open(f"{self.name[:self.name.rfind('.')]}.bmp", 'rb') as file:
@@ -56,46 +58,8 @@ class Image:
         with open(file_name, 'wb') as file:
             file.write(data)
 
-    def compression(self, arr, horizontally, vertically):
-        """
-        Сжимание изображения
-        :param arr: изображение
-        :param horizontally: желаемый размер стороны по вертикали
-        :param vertically: желаемый размер стороны по горизонтали
-        :return: изображение
-        """
-        # Находим высоту и ширину изображения
-        height, width, _ = arr.shape
-
-        # Создаём массивы с указанием размеров блоков: по горизонтали и вертикали. Заполняем его числами полученными в результате деления исходно1 на желаемую стороны изображения
-        x_factors =  numpy.full(horizontally, width // horizontally)
-        y_factors = numpy.full(vertically, height // vertically)
-
-        # Остаток раскидываем по массиву указаний размеров блоков
-        x_factors[:width % horizontally] += 1
-        y_factors[:height % vertically] += 1
-
-        # Вычисление индексов для получения блоков изображения
-        x_indexes = numpy.cumsum([0] + x_factors.tolist())
-        y_indexes = numpy.cumsum([0] + y_factors.tolist())
-
-        # Создаём новый массив, в котором будет конечный результат
-        new_arr = numpy.zeros((vertically, horizontally, 3), dtype=numpy.uint8)
-
-        # Поблочная обработка
-        for y in range(vertically):
-            for x in range(horizontally):
-                # Собираем все цвета с изображения в пределе между ближайшими индексами в массиве
-                block = arr[y_indexes[y]:y_indexes[y + 1], x_indexes[x]:x_indexes[x + 1]]
-
-                # Сумма цветов в блоке
-                sum_colors = numpy.mean(block, axis=(0, 1))
-
-                # Если меньше синего, то закрашиваем в чёрный
-                new_arr[y, x] = (255, 255, 255) if numpy.mean(sum_colors) >= 127.5 else (0, 0, 0)
-
-        # Возвращаем сжатое изображение
-        return new_arr
+    def compression(self, width, height):
+        pass
 
     def simplify(self, factor=127.5):
         for y in range(self.height):
