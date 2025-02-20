@@ -4,7 +4,7 @@ app = flask.Flask(__name__)
 
 def photo_processing(name_file):
     image = image_utils.Image(name_file)
-    image.compression(32, 32)
+    image.compression(25, 25)
     image.save(name_file)
 
 @app.route('/')
