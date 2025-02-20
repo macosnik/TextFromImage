@@ -107,16 +107,16 @@ class Image:
         self.width = width
         self.height = height
 
-def draw_line(self, x1, y1, x2, y2, color):
-    width = len(self.arr)
-    height = len(self.arr[0])
-    delta_x = abs(x1 - x2)
-    delta_y = abs(y1 - y2)
-    length = int(math.sqrt(delta_x ** 2 + delta_y ** 2))
+    def line(self, x1, y1, x2, y2, color):
+        width = len(self.arr)
+        height = len(self.arr[0])
+        delta_x = abs(x1 - x2)
+        delta_y = abs(y1 - y2)
+        length = int(math.sqrt(delta_x ** 2 + delta_y ** 2))
 
-    for i in range(length):
-        x = round(x1 + (x2 - x1) * i / length)
-        y = round(y1 + (y2 - y1) * i / length)
+        for i in range(length):
+            x = round(x1 + (x2 - x1) * i / length)
+            y = round(y1 + (y2 - y1) * i / length)
 
-        if 0 <= y < height and 0 <= x < width:
-            self.arr[y][x] = color
+            if 0 <= y < height and 0 <= x < width:
+                self.arr[y][x] = color
