@@ -1,7 +1,7 @@
 const canvas = document.getElementById('drawingCanvas');
 const wayDrawing = canvas.getContext('2d');
 let drawing = false;
-let brushSize = 35;
+let brushSize = 50;
 
 function startDrawing(e) {
     drawing = true;

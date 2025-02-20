@@ -24,7 +24,7 @@ def save_image():
 
         target_folder = f'../DataCenter/{data.get('folder', 'tests')}'
         num_files = len(os.listdir(target_folder))
-        name_file = f'{target_folder[target_folder.rfind("/") + 1:]}_{num_files + 1}.bmp'
+        name_file = f'image_{num_files + 1}.bmp'
         file_path = f'{target_folder}/{name_file}'
 
         with open(file_path, 'wb') as f:
