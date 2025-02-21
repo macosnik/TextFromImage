@@ -37,7 +37,7 @@
   </div>
 </div>
 
-Код:
+Пример кода:
 ```python
 import image_utils
 
