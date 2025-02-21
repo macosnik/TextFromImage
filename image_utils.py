@@ -92,16 +92,14 @@ class Image:
             for x in range(width):
                 count_pixels = 0
 
-                for y_pixels in range(sum(grouping_order_y[:y + 1]) - sum(grouping_order_y[:y])):
-                    for x_pixels in range(sum(grouping_order_x[:x + 1]) - sum(grouping_order_x[:x])):
+                for y_fragments in range(sum(grouping_order_y[:y + 1]) - sum(grouping_order_y[:y])):
+                    for x_fragments in range(sum(grouping_order_x[:x + 1]) - sum(grouping_order_x[:x])):
                         count_pixels += 1
-                        pixel_color = self.arr[sum(grouping_order_y[:y]) + y_pixels][sum(grouping_order_x[:x]) + x_pixels]
+                        pixel_color = self.arr[sum(grouping_order_y[:y]) + y_fragments][sum(grouping_order_x[:x]) + x_fragments]
                         arr[y][x] += pixel_color[0] + pixel_color[1] + pixel_color[2]
 
-                if arr[y][x] / count_pixels / 3 < 127.5:
-                    arr[y][x] = (0, 0, 0)
-                else:
-                    arr[y][x] = (255, 255, 255)
+                color = int(arr[y][x] / count_pixels / 3)
+                arr[y][x] = (color, color, color)
 
         self.arr = arr
         self.width = width
