@@ -24,8 +24,25 @@
 
 `compression` - функция для сжатия изображения до чёрно-белого цвета с соответствующим масштабом. Для начала происходит разбиение изображения на группы с определённым кол-вом пикселей из исходного массива, с помощью специального алгоритма, а затем среднее арифметическое всех оттенков цветов с каждой группы записывается в новый массив соответственно. Новый массив и есть сжатое изображение.
 
-Вот пример работы модуля:
+### Вот пример работы модуля:
 
-| Original | Compressed (10%)                                      |
-|----------|-------------------------------------------------------|
-| ![Original](Materials/test_bmp_image_before.jpeg) | ![Compressed 50%](Materials/test_bmp_image_after.bmp) |
+<div style="display: flex; justify-content: center; gap: 30px; margin: 20px 0;">
+  <div>
+    <img src="Materials/test_bmp_image_before.jpeg" width="450" alt="Original">
+    <em>Исходное изображение</em>
+  </div>
+  <div>
+    <img src="Materials/test_bmp_image_after.bmp" width="450" alt="Compressed">
+    <em>Сжатое изображение</em>
+  </div>
+</div>
+
+Код:
+```python
+import image_utils
+
+image = image_utils.Image('test_bmp_image_before.jpeg')
+image.compression(128, 85)
+image.save('test_bmp_image_after.bmp')
+```
+
