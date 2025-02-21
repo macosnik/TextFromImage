@@ -28,3 +28,8 @@
 ![test_bmp_image_before.jpeg](Materials/test_bmp_image_before.jpeg)
 
 ![test_bmp_image_after.bmp](Materials/test_bmp_image_after.bmp)
+
+
+| Original | Compressed (10%)                                      |
+|----------|-------------------------------------------------------|
+| ![Original](Materials/test_bmp_image_before.jpeg) | ![Compressed 50%](Materials/test_bmp_image_after.bmp) |
