@@ -11,4 +11,4 @@
 
 ![icon.png](TechnicalSite/static/icon.png)
 
-![struct_bmp.jpg](Materials/struct_bmp.png)
+![struct_bmp.jpg](Materials/struct_bmp.jpg)
