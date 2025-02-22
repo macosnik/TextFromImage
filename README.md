@@ -20,54 +20,41 @@
 
 Зная все аспекты данных в изображении, запись пикселей имеет вид: <br /> \[\[\(B, G, R), (B, G, R)], <br />\[\(B, G, R), (B, G, R)], <br />\[\(B, G, R), (B, G, R)]]. 
 
+---
+
 `save` - функция, которая сохраняем изображение в директории, зная только пиксели и имя будущего файла в формате BMP. Сохранение происходит с соответствием структуры BMP-файлов. 
+
+---
 
 `compression` - функция для сжатия изображения до чёрно-белого цвета с соответствующим масштабом. Для начала происходит разбиение изображения на группы с определённым кол-вом пикселей из исходного массива, с помощью специального алгоритма, а затем среднее арифметическое всех оттенков цветов с каждой группы записывается в новый массив соответственно. Новый массив и есть сжатое изображение.
 
-### Вот пример работы модуля:
+---
 
-<style>
-    .image-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin: 20px;
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        padding: 10px;
-    }
-    .image-container img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 8px;
-    }
-    .image-container em {
-        margin-top: 10px;
-        font-style: italic;
-        color: #555;
-    }
-    .gallery {
-        display: flex;
-        justify-content: space-around;
-        flex-wrap: wrap;
-    }
-</style>
+## 🎨 Вот пример работы модуля:
 
-<div class="gallery">
-    <div class="image-container">
-        <img src="Materials/test_bmp_image_original.bmp" alt="Original">
-        <em>Исходное изображение</em>
-    </div>
-    <div class="image-container">
-        <img src="Materials/test_bmp_image_compression.bmp" alt="Compressed">
-        <em>Сжатое изображение</em>
-    </div>
-    <div class="image-container">
-        <img src="Materials/test_bmp_image_simplify.bmp" alt="Simplified">
-        <em>Чёрно-белое изображение</em>
-    </div>
+### 📷 Исходное изображение
+
+<div>
+    <img src="Materials/test_bmp_image_original.bmp" width="450" alt="Original">
 </div>
+
+---
+
+### 📉 Сжатое изображение
+
+<div>
+    <img src="Materials/test_bmp_image_compression.bmp" width="450" alt="Compressed">
+</div>
+
+---
+
+### ⚫ Чёрно-белое изображение
+
+<div>
+    <img src="Materials/test_bmp_image_simplify.bmp" width="450" alt="Original">
+</div>
+
+---
 
 Пример кода:
 ```python
@@ -78,4 +65,6 @@ image.compression(128, 85)
 image.simplify()
 image.save('test_bmp_image_after.bmp')
 ```
+
+---
 
