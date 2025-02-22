@@ -111,6 +111,12 @@ class Image:
                 color = sum(self.arr[y][x]) // 3
                 self.arr[y][x] = (color, color, color)
 
+    def zero_to_one_list(self):
+        arr = []
+        for y in range(self.height):
+            for x in range(self.width):
+                arr.append(int(sum(self.arr[y][x]) / 765.0))
+
     def line(self, x1, y1, x2, y2, color):
         width = len(self.arr)
         height = len(self.arr[0])
