@@ -26,19 +26,47 @@
 
 ### Вот пример работы модуля:
 
-<div style="display: flex; justify-content: center; gap: 30px; margin: 20px 0;">
-  <div>
-    <img src="Materials/test_bmp_image_original.bmp" width="450" alt="Original">
-    <em>Исходное изображение</em>
-  </div>
-  <div>
-    <img src="Materials/test_bmp_image_compression.bmp" width="450" alt="Compressed">
-    <em>Сжатое изображение</em>
-  </div>
-  <div>
-    <img src="Materials/test_bmp_image_simplify.bmp" width="450" alt="Original">
-    <em>Чёрно-белое изображение</em>
-  </div>
+<style>
+    .image-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 20px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+    }
+    .image-container img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
+    .image-container em {
+        margin-top: 10px;
+        font-style: italic;
+        color: #555;
+    }
+    .gallery {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+</style>
+
+<div class="gallery">
+    <div class="image-container">
+        <img src="Materials/test_bmp_image_original.bmp" alt="Original">
+        <em>Исходное изображение</em>
+    </div>
+    <div class="image-container">
+        <img src="Materials/test_bmp_image_compression.bmp" alt="Compressed">
+        <em>Сжатое изображение</em>
+    </div>
+    <div class="image-container">
+        <img src="Materials/test_bmp_image_simplify.bmp" alt="Simplified">
+        <em>Чёрно-белое изображение</em>
+    </div>
 </div>
 
 Пример кода:
