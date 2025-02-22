@@ -47,6 +47,7 @@ import image_utils
 
 image = image_utils.Image('test_bmp_image_before.bmp')
 image.compression(128, 85)
+image.simplify()
 image.save('test_bmp_image_after.bmp')
 ```
 
