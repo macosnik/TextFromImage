@@ -91,15 +91,14 @@ class Image:
         for y in range(height):
             for x in range(width):
                 count_pixels = 0
-
                 for y_fragments in range(sum(grouping_order_y[:y + 1]) - sum(grouping_order_y[:y])):
                     for x_fragments in range(sum(grouping_order_x[:x + 1]) - sum(grouping_order_x[:x])):
                         count_pixels += 1
-                        pixel_color = self.arr[sum(grouping_order_y[:y]) + y_fragments][sum(grouping_order_x[:x]) + x_fragments]
+                        pixel_color = self.arr[sum(grouping_order_y[:y]) + y_fragments][
+                            sum(grouping_order_x[:x]) + x_fragments]
                         arr[y][x][0] += pixel_color[0]
                         arr[y][x][1] += pixel_color[1]
                         arr[y][x][2] += pixel_color[2]
-
                 arr[y][x] = (arr[y][x][0] // count_pixels, arr[y][x][1] // count_pixels, arr[y][x][2] // count_pixels)
 
         self.arr = arr
