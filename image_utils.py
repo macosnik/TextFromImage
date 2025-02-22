@@ -105,6 +105,12 @@ class Image:
         self.width = width
         self.height = height
 
+    def simplify(self):
+        for y in range(self.height):
+            for x in range(self.width):
+                color = sum(self.arr[y][x]) // 3
+                self.arr[y][x] = (color, color, color)
+
     def line(self, x1, y1, x2, y2, color):
         width = len(self.arr)
         height = len(self.arr[0])
