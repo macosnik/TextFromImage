@@ -38,23 +38,17 @@
     <img src="Materials/test_bmp_image_original.bmp" width="450" alt="Original">
 </div>
 
----
-
 ### 📉 Сжатое изображение
 
 <div>
     <img src="Materials/test_bmp_image_compression.bmp" width="450" alt="Compressed">
 </div>
 
----
-
 ### ⚫ Чёрно-белое изображение
 
 <div>
     <img src="Materials/test_bmp_image_simplify.bmp" width="450" alt="Original">
 </div>
-
----
 
 Пример кода:
 ```python
