@@ -54,10 +54,10 @@
 ```python
 import image_utils
 
-image = image_utils.Image('test_bmp_image_before.bmp')
-image.compression(128, 85)
+image = image_utils.Image('input_file_name.png')
+image.compression(10, 10)
 image.simplify()
-image.save('test_bmp_image_after.bmp')
+image.save('output.bmp')
 ```
 
 ---
