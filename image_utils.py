@@ -115,7 +115,8 @@ class Image:
         arr = []
         for y in range(self.height):
             for x in range(self.width):
-                arr.append(int(sum(self.arr[y][x]) / 765.0))
+                arr.append(round(sum(self.arr[y][x]) / 765.0, 2))
+        return arr
 
     def line(self, x1, y1, x2, y2, color):
         width = len(self.arr)
