@@ -28,12 +28,16 @@
 
 <div style="display: flex; justify-content: center; gap: 30px; margin: 20px 0;">
   <div>
-    <img src="Materials/test_bmp_image_before.jpeg" width="450" alt="Original">
+    <img src="Materials/test_bmp_image_original.bmp" width="450" alt="Original">
     <em>Исходное изображение</em>
   </div>
   <div>
-    <img src="Materials/test_bmp_image_after.bmp" width="450" alt="Compressed">
+    <img src="Materials/test_bmp_image_compression.bmp" width="450" alt="Compressed">
     <em>Сжатое изображение</em>
+  </div>
+  <div>
+    <img src="Materials/test_bmp_image_simplify.bmp" width="450" alt="Original">
+    <em>Чёрно-белое изображение</em>
   </div>
 </div>
 
@@ -41,7 +45,7 @@
 ```python
 import image_utils
 
-image = image_utils.Image('test_bmp_image_before.jpeg')
+image = image_utils.Image('test_bmp_image_before.bmp')
 image.compression(128, 85)
 image.save('test_bmp_image_after.bmp')
 ```
