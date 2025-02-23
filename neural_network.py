@@ -49,13 +49,13 @@ class TwoLayersNeuralNetwork:
             part = []
             for _ in range(hidden_2):
                 part.append(random.uniform(-0.5, 0.5))
-            self.weights_1.append(part)
+            self.weights_2.append(part)
 
         for i in range(hidden_2):
             part = []
             for _ in range(outputs):
                 part.append(random.uniform(-0.5, 0.5))
-            self.weights_1.append(part)
+            self.weights_3.append(part)
 
         for _ in range(hidden_1):
             self.bias_1.append(0.0)
@@ -95,6 +95,11 @@ class TwoLayersNeuralNetwork:
         
         self.output_inputs = []
 
-
+        print()
+        print(self.hidden_inputs1)
+        print(self.hidden_outputs1)
+        print()
+        print(self.hidden_inputs2)
+        print(self.hidden_outputs2)
 
 
