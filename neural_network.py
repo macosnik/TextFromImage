@@ -33,25 +33,28 @@ class NeuralNetwork:
         self.bias_2 = []
         self.bias_3 = []
         self.hidden_inputs1 = []
+        self.hidden_outputs1 = []
         self.hidden_inputs2 = []
+        self.hidden_outputs2 = []
         self.output_inputs = []
+        self.output = []
 
         for i in range(inputs):
             part = []
             for _ in range(hidden_1):
-                part.append(round(random.uniform(-0.5, 0.5), 2))
+                part.append(random.uniform(-0.5, 0.5))
             self.weights_1.append(part)
 
         for i in range(hidden_1):
             part = []
             for _ in range(hidden_2):
-                part.append(round(random.uniform(-0.5, 0.5), 2))
+                part.append(random.uniform(-0.5, 0.5))
             self.weights_1.append(part)
 
         for i in range(hidden_2):
             part = []
             for _ in range(outputs):
-                part.append(round(random.uniform(-0.5, 0.5), 2))
+                part.append(random.uniform(-0.5, 0.5))
             self.weights_1.append(part)
 
         for _ in range(hidden_1):
@@ -71,9 +74,13 @@ class NeuralNetwork:
                 weighted_sum += arr[input_index] * self.weights_1[input_index][neuron_index]
 
             weighted_sum += self.bias_1[neuron_index]
-            self.hidden_inputs1.append(round(sigmoid(weighted_sum), 2))
+            self.hidden_inputs1.append(weighted_sum)
+
+        for value in self.hidden_inputs1:
+            self.hidden_outputs1.append(sigmoid(value))
 
         print(self.hidden_inputs1)
+        print(self.hidden_outputs1)
 
         
 
