@@ -1,4 +1,4 @@
-import random, math
+import random
 
 def sigmoid(i):
     return 1 / (2.718281828459045 ** (- i) + 1)
@@ -32,10 +32,15 @@ class NeuralNetwork:
         self.bias_1 = []
         self.bias_2 = []
         self.bias_3 = []
+        self.hidden_inputs1 = []
+        self.hidden_inputs2 = []
+        self.output_inputs = []
 
-        for _ in range(inputs):
+        for i in range(inputs):
+            part = []
             for _ in range(hidden_1):
-                self.weights_1.append(round(random.uniform(-0.5, 0.5), 2))
+                part.append(round(random.uniform(-0.5, 0.5), 2))
+            self.weights_1.append(part)
         for _ in range(hidden_1):
             for _ in range(hidden_2):
                 self.weights_2.append(round(random.uniform(-0.5, 0.5), 2))
@@ -50,10 +55,14 @@ class NeuralNetwork:
         for _ in range(outputs):
             self.bias_3.append(0.0)
 
-    def forward(self, i):
-        pass
+    def forward(self, arr):
+        self.hidden_inputs1 = []
 
+        for neuron_index in range(self.hidden_1):
+            weighted_sum = 0
 
+            for input_index in range(self.inputs):
+                weighted_sum += arr[input_index] * self.weights_1[input_index][neuron_index]
 
 
         
