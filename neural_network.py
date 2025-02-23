@@ -41,12 +41,18 @@ class NeuralNetwork:
             for _ in range(hidden_1):
                 part.append(round(random.uniform(-0.5, 0.5), 2))
             self.weights_1.append(part)
-        for _ in range(hidden_1):
+
+        for i in range(hidden_1):
+            part = []
             for _ in range(hidden_2):
-                self.weights_2.append(round(random.uniform(-0.5, 0.5), 2))
-        for _ in range(hidden_2):
+                part.append(round(random.uniform(-0.5, 0.5), 2))
+            self.weights_1.append(part)
+
+        for i in range(hidden_2):
+            part = []
             for _ in range(outputs):
-                self.weights_3.append(round(random.uniform(-0.5, 0.5), 2))
+                part.append(round(random.uniform(-0.5, 0.5), 2))
+            self.weights_1.append(part)
 
         for _ in range(hidden_1):
             self.bias_1.append(0.0)
@@ -64,6 +70,10 @@ class NeuralNetwork:
             for input_index in range(self.inputs):
                 weighted_sum += arr[input_index] * self.weights_1[input_index][neuron_index]
 
+            weighted_sum += self.bias_1[neuron_index]
+            self.hidden_inputs1.append(round(sigmoid(weighted_sum), 2))
+
+        print(self.hidden_inputs1)
 
         
 
