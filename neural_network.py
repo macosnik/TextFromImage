@@ -6,7 +6,19 @@ def sigmoid(i):
 def sigmoid_derivative(i):
     return (1 - i) * i
 
+def exit_nums(arr):
+    return_arr = []
+    e_sum = []
 
+    for i in arr:
+        e_sum.append(2.718281828459045 ** i)
+
+    e_sum = sum(e_sum)
+
+    for i in arr:
+        return_arr.append(round(2.718281828459045 ** i / e_sum, 3))
+
+    return return_arr
 
 class NeuralNetwork:
     def __init__(self, inputs, hidden_1, hidden_2, outputs):
@@ -38,7 +50,7 @@ class NeuralNetwork:
         for _ in range(outputs):
             self.bias_3.append(0.0)
 
-
+        print(exit_nums([2.0, 1.0, 0.1]))
 
 
 
