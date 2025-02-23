@@ -119,15 +119,18 @@ class Image:
         return arr
 
     def line(self, x1, y1, x2, y2, color):
-        width = len(self.arr)
-        height = len(self.arr[0])
-        delta_x = abs(x1 - x2)
-        delta_y = abs(y1 - y2)
-        length = int(math.sqrt(delta_x ** 2 + delta_y ** 2))
+        length = int(math.sqrt(abs(x1 - x2) ** 2 + abs(y1 - y2) ** 2))
 
         for i in range(length):
             x = round(x1 + (x2 - x1) * i / length)
             y = round(y1 + (y2 - y1) * i / length)
-
-            if 0 <= y < height and 0 <= x < width:
+            if 0 <= y < self.height and 0 <= x <self. width:
                 self.arr[y][x] = color
+
+    def rect(self, x1, y1, x2, y2, color):
+        for x in range(abs(x1 - x2) + 1):
+            self.arr[y1][x1 + x] = color
+            self.arr[y2][x1 + x] = color
+        for y in range(abs(y1 - y2) + 1):
+            self.arr[y1 + y][x2] = color
+            self.arr[y1 + y][x1] = color

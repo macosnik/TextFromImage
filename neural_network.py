@@ -50,7 +50,9 @@ class NeuralNetwork:
         for _ in range(outputs):
             self.bias_3.append(0.0)
 
-        print(exit_nums([2.0, 1.0, 0.1]))
+    def forward(self, i):
+        pass
+
 
 
 
