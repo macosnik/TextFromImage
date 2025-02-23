@@ -106,14 +106,10 @@ class TwoLayersNeuralNetwork:
 
         self.outputs = exit_nums(self.output_inputs)
 
-        print()
-        print(self.hidden_inputs1)
-        print(self.hidden_outputs1)
-        print()
-        print(self.hidden_inputs2)
-        print(self.hidden_outputs2)
-        print()
-        print(self.output_inputs)
-        print(self.outputs)
+
+
+
+
+
 
 
