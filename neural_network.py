@@ -95,11 +95,25 @@ class TwoLayersNeuralNetwork:
         
         self.output_inputs = []
 
+        for neuron_index in range(self.outputs):
+            weighted_sum = 0
+
+            for input_index in range(self.hidden_2):
+                weighted_sum += self.hidden_outputs2[input_index] * self.weights_3[input_index][neuron_index]
+
+            weighted_sum += self.bias_3[neuron_index]
+            self.output_inputs.append(weighted_sum)
+
+        self.outputs = exit_nums(self.output_inputs)
+
         print()
         print(self.hidden_inputs1)
         print(self.hidden_outputs1)
         print()
         print(self.hidden_inputs2)
         print(self.hidden_outputs2)
+        print()
+        print(self.output_inputs)
+        print(self.outputs)
 
 
