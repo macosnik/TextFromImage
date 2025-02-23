@@ -54,9 +54,9 @@
 
 Пример кода:
 ```python
-import image_utils
+from image_utils import Image
 
-image = image_utils.Image('input_file_name.png')
+image = Image('input_file_name.png')
 image.compression(10, 10)
 image.simplify()
 image.save('output.bmp')
