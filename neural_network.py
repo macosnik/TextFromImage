@@ -20,7 +20,7 @@ def exit_nums(arr):
 
     return return_arr
 
-class NeuralNetwork:
+class TwoLayersNeuralNetwork:
     def __init__(self, inputs, hidden_1, hidden_2, outputs):
         self.inputs = inputs
         self.hidden_1 = hidden_1
@@ -79,10 +79,21 @@ class NeuralNetwork:
         for value in self.hidden_inputs1:
             self.hidden_outputs1.append(sigmoid(value))
 
-        print(self.hidden_inputs1)
-        print(self.hidden_outputs1)
+        self.hidden_inputs2 = []
 
+        for neuron_index in range(self.hidden_2):
+            weighted_sum = 0
+
+            for input_index in range(self.hidden_1):
+                weighted_sum += self.hidden_outputs1[input_index] * self.weights_2[input_index][neuron_index]
+
+            weighted_sum += self.bias_2[neuron_index]
+            self.hidden_inputs2.append(weighted_sum)
+
+        for value in self.hidden_inputs2:
+            self.hidden_outputs2.append(sigmoid(value))
         
+        self.output_inputs = []
 
 
 
