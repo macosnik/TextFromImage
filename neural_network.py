@@ -106,6 +106,7 @@ class TwoLayersNeuralNetwork:
 
         self.outputs = exit_nums(self.output_inputs)
 
+        return self.outputs
 
 
 
