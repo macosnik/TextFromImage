@@ -6,9 +6,6 @@ arr = image.zero_to_one_list()
 
 network = TwoLayersNeuralNetwork(625, 128, 64, 10)
 
-output = network.forward(arr)
-print(output)
-
 network.train(arr, [0, 0, 1, 0, 0, 0, 0, 0, 0, 0])
 
 

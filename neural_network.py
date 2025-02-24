@@ -111,7 +111,7 @@ class TwoLayersNeuralNetwork:
 
         return self.output
 
-    def train(self, image, true_answer):
+    def train(self, image, true_answer, speed=0.1):
         self.forward(image)
 
         output_error = []
@@ -119,7 +119,22 @@ class TwoLayersNeuralNetwork:
         for i in range(self.outputs_size):
             output_error.append(self.output[i] - true_answer[i])
 
-        print(output_error)
+        delta_3 = output_error
+        gradient_weights_3 = []
+        gradient_bias_3 = []
+
+        for neuron_index in range(self.hidden_2_size):
+            part = []
+            for output_index in range(self.outputs_size):
+                part.append(self.hidden_outputs2[neuron_index] * delta_3[output_index] * speed)
+            gradient_weights_3.append(part)
+
+        for output_index in range(self.outputs_size):
+            gradient_bias_3.append(delta_3[output_index] * speed)
+
+
+
+
 
 
 
