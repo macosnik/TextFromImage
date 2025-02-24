@@ -25,24 +25,18 @@ for epoch in range(len(lib)):
     network.train(lib[epoch][0], true_answer)
 
     if epoch % 100 == 0:
-        global_err = 0
+        total_error = 0
 
-        for arr, target in lib:
+        for arr, symbol in lib:
             output = network.forward(arr)
+            target = [0] * len(symbols_lib)
+            target[symbols_lib.index(symbol)] = 1
 
-            global_err += sum((output[i] - target[i]) ** 2 for i in range(output_size))
+            for i in range(outputs_size):
+                error = output[i] - target[i]
+                squared_error = error ** 2
+                total_error += squared_error
 
-#
-# image = Image(f'DataCenter/tests/image_1.bmp')
-# arr = image.zero_to_one_list()
-# print(network.forward(arr))
-#
-# image = Image(f'DataCenter/tests/image_2.bmp')
-# arr = image.zero_to_one_list()
-# print(network.forward(arr))
-
-
-
-
-
+        average_error = total_error / len(lib)
+        print(f"Эпоха {epoch}, Средняя ошибка: {average_error}")
 
