@@ -166,6 +166,17 @@ class TwoLayersNeuralNetwork:
         for hidden_1_index in range(self.hidden_1_size):
             gradient_bias_1.append(delta_1[hidden_1_index] * speed)
 
+        for input_index in range(self.inputs_size):
+            for hidden_1_index in range(self.hidden_1_size):
+                self.weights_1[input_index][hidden_1_index] -= gradient_weights_1[input_index][hidden_1_index]
+
+        for hidden_1_index in range(self.hidden_1_size):
+            for hidden_2_index in range(self.hidden_2_size):
+                self.weights_2[hidden_1_index][hidden_2_index] -= gradient_weights_2[hidden_1_index][hidden_2_index]
+
+        for hidden_2_index in range(self.hidden_2_size):
+            for output_index in range(self.outputs_size):
+                self.weights_1[hidden_2_index][output_index] -= gradient_weights_1[hidden_2_index][output_index]
 
 
 
