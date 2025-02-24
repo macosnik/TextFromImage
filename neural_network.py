@@ -66,6 +66,7 @@ class TwoLayersNeuralNetwork:
 
     def predict(self, arr):
         self.hidden_inputs1 = []
+        self.hidden_outputs1 = []
 
         for neuron_index in range(self.hidden_1):
             weighted_sum = 0
@@ -80,6 +81,7 @@ class TwoLayersNeuralNetwork:
             self.hidden_outputs1.append(sigmoid(value))
 
         self.hidden_inputs2 = []
+        self.hidden_outputs2 = []
 
         for neuron_index in range(self.hidden_2):
             weighted_sum = 0
@@ -94,6 +96,7 @@ class TwoLayersNeuralNetwork:
             self.hidden_outputs2.append(sigmoid(value))
         
         self.output_inputs = []
+        self.output = []
 
         for neuron_index in range(self.outputs):
             weighted_sum = 0
@@ -104,9 +107,9 @@ class TwoLayersNeuralNetwork:
             weighted_sum += self.bias_3[neuron_index]
             self.output_inputs.append(weighted_sum)
 
-        self.outputs = exit_nums(self.output_inputs)
+        self.output = exit_nums(self.output_inputs)
 
-        return self.outputs
+        return self.output
 
 
 
