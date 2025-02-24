@@ -111,7 +111,8 @@ class TwoLayersNeuralNetwork:
 
         return self.output
 
-
+    def training(self):
+        pass
 
 
 
