@@ -151,7 +151,22 @@ class TwoLayersNeuralNetwork:
         gradient_weights_1 = []
         gradient_bias_1 = []
 
+        for neuron_index in range(self.hidden_1_size):
+            error = 0
+            for output_index in range(self.hidden_2_size):
+                error += delta_2[output_index] * self.weights_2[neuron_index][output_index]
+            derivative = sigmoid_derivative(self.hidden_outputs1[neuron_index])
+            neuron_error = error * derivative
+            delta_1.append(neuron_error)
 
+        for neuron_index in range(self.inputs_size):
+            part = []
+            for output_index in range(self.hidden_1_size):
+                part.append(image[neuron_index] * delta_1[output_index] * speed)
+            gradient_weights_1.append(part)
+
+        for output_index in range(self.hidden_1_size):
+            gradient_bias_1.append(delta_1[output_index] * speed)
 
 
 
