@@ -166,7 +166,7 @@ class TwoLayersNeuralNetwork:
         for neuron_index in range(self.hidden_1_size):
             gradient_bias_1.append(delta_1[neuron_index] * speed)
 
-        pass
+
 
 
 
