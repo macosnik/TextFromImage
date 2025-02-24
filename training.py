@@ -5,9 +5,11 @@ image = Image('DataCenter/tests/image_1.bmp')
 arr = image.zero_to_one_list()
 
 network = TwoLayersNeuralNetwork(625, 128, 64, 10)
-output = network.predict(arr)
 
+output = network.forward(arr)
 print(output)
+
+network.train(arr, [0, 0, 1, 0, 0, 0, 0, 0, 0, 0])
 
 
 
