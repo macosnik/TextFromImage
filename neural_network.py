@@ -178,7 +178,14 @@ class TwoLayersNeuralNetwork:
             for output_index in range(self.outputs_size):
                 self.weights_1[hidden_2_index][output_index] -= gradient_weights_1[hidden_2_index][output_index]
 
+        for hidden_1_index in range(self.hidden_1_size):
+            self.bias_1[hidden_1_index] -= gradient_bias_1[hidden_1_index]
 
+        for hidden_2_index in range(self.hidden_2_size):
+            self.bias_2[hidden_2_index] -= gradient_bias_2[hidden_2_index]
+
+        for output_index in range(self.outputs_size):
+            self.bias_3[output_index] -= gradient_bias_3[output_index]
 
 
 
