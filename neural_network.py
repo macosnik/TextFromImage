@@ -70,10 +70,8 @@ class TwoLayersNeuralNetwork:
 
         for neuron_index in range(self.hidden_1_size):
             weighted_sum = 0
-
             for input_index in range(self.inputs_size):
                 weighted_sum += image[input_index] * self.weights_1[input_index][neuron_index]
-
             weighted_sum += self.bias_1[neuron_index]
             self.hidden_inputs1.append(weighted_sum)
 
@@ -85,10 +83,8 @@ class TwoLayersNeuralNetwork:
 
         for neuron_index in range(self.hidden_2_size):
             weighted_sum = 0
-
             for input_index in range(self.hidden_1_size):
                 weighted_sum += self.hidden_outputs1[input_index] * self.weights_2[input_index][neuron_index]
-
             weighted_sum += self.bias_2[neuron_index]
             self.hidden_inputs2.append(weighted_sum)
 
@@ -100,10 +96,8 @@ class TwoLayersNeuralNetwork:
 
         for neuron_index in range(self.outputs_size):
             weighted_sum = 0
-
             for input_index in range(self.hidden_2_size):
                 weighted_sum += self.hidden_outputs2[input_index] * self.weights_3[input_index][neuron_index]
-
             weighted_sum += self.bias_3[neuron_index]
             self.output_inputs.append(weighted_sum)
 
@@ -131,6 +125,16 @@ class TwoLayersNeuralNetwork:
 
         for output_index in range(self.outputs_size):
             gradient_bias_3.append(delta_3[output_index] * speed)
+
+        delta_2 = []
+
+        for neuron_index in range(self.hidden_2_size):
+            error = 0
+            for output_index in range(self.outputs_size):
+                error += delta_3[output_index] * self.weights_3[neuron_index][output_index]
+            derivative = sigmoid_derivative(self.hidden_outputs2[neuron_index])
+            neuron_error = error * derivative
+            delta_2.append(neuron_error)
 
 
 
