@@ -1,6 +1,6 @@
 from neural_network import TwoLayersNeuralNetwork
 from image_utils import Image
-import time
+import os
 
 image_0 = []
 image_1 = []
@@ -17,7 +17,7 @@ for num_image in range(epochs):
     arr = image.zero_to_one_list()
     image_1.append(arr)
 
-network = TwoLayersNeuralNetwork(625, 128, 64, 2)
+network = TwoLayersNeuralNetwork(625, 256, 128, 2)
 
 for epoch in range(epochs):
     network.train(image_0[epoch], [1, 0])
