@@ -117,10 +117,10 @@ class TwoLayersNeuralNetwork:
         gradient_weights_3 = []
         gradient_bias_3 = []
 
-        for neuron_index in range(self.hidden_2_size):
+        for hidden_2_index in range(self.hidden_2_size):
             part = []
             for output_index in range(self.outputs_size):
-                part.append(self.hidden_outputs2[neuron_index] * delta_3[output_index] * speed)
+                part.append(self.hidden_outputs2[hidden_2_index] * delta_3[output_index] * speed)
             gradient_weights_3.append(part)
 
         for output_index in range(self.outputs_size):
@@ -130,41 +130,41 @@ class TwoLayersNeuralNetwork:
         gradient_weights_2 = []
         gradient_bias_2 = []
 
-        for neuron_index in range(self.hidden_2_size):
+        for hidden_2_index in range(self.hidden_2_size):
             error = 0
             for output_index in range(self.outputs_size):
-                error += delta_3[output_index] * self.weights_3[neuron_index][output_index]
-            derivative = sigmoid_derivative(self.hidden_outputs2[neuron_index])
+                error += delta_3[output_index] * self.weights_3[hidden_2_index][output_index]
+            derivative = sigmoid_derivative(self.hidden_outputs2[hidden_2_index])
             delta_2.append(error * derivative)
 
-        for neuron_1_index in range(self.hidden_1_size):
+        for hidden_1_index in range(self.hidden_1_size):
             part = []
-            for neuron_2_index in range(self.hidden_2_size):
-                part.append(self.hidden_outputs1[neuron_1_index] * delta_2[neuron_2_index] * speed)
+            for hidden_2_index in range(self.hidden_2_size):
+                part.append(self.hidden_outputs1[hidden_1_index] * delta_2[hidden_2_index] * speed)
             gradient_weights_2.append(part)
 
-        for neuron_2_index in range(self.hidden_2_size):
-            gradient_bias_2.append(delta_2[neuron_2_index] * speed)
+        for hidden_2_index in range(self.hidden_2_size):
+            gradient_bias_2.append(delta_2[hidden_2_index] * speed)
 
         delta_1 = []
         gradient_weights_1 = []
         gradient_bias_1 = []
 
-        for neuron_1_index in range(self.hidden_1_size):
+        for hidden_1_index in range(self.hidden_1_size):
             error = 0
-            for neuron_2_index in range(self.hidden_2_size):
-                error += delta_2[neuron_2_index] * self.weights_2[neuron_1_index][neuron_2_index]
-            derivative = sigmoid_derivative(self.hidden_outputs1[neuron_1_index])
+            for hidden_2_index in range(self.hidden_2_size):
+                error += delta_2[hidden_2_index] * self.weights_2[hidden_1_index][hidden_2_index]
+            derivative = sigmoid_derivative(self.hidden_outputs1[hidden_1_index])
             delta_1.append(error * derivative)
 
         for input_index in range(self.inputs_size):
             part = []
-            for neuron_index in range(self.hidden_1_size):
-                part.append(image[input_index] * delta_1[neuron_index] * speed)
+            for hidden_1_index in range(self.hidden_1_size):
+                part.append(image[input_index] * delta_1[hidden_1_index] * speed)
             gradient_weights_1.append(part)
 
-        for neuron_index in range(self.hidden_1_size):
-            gradient_bias_1.append(delta_1[neuron_index] * speed)
+        for hidden_1_index in range(self.hidden_1_size):
+            gradient_bias_1.append(delta_1[hidden_1_index] * speed)
 
 
 
