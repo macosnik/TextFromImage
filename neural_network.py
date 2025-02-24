@@ -16,7 +16,7 @@ def exit_nums(arr):
     e_sum = sum(e_sum)
 
     for i in arr:
-        return_arr.append(round(2.718281828459045 ** i / e_sum, 3))
+        return_arr.append(2.718281828459045 ** i / e_sum)
 
     return return_arr
 
@@ -58,11 +58,11 @@ class TwoLayersNeuralNetwork:
             self.weights_3.append(part)
 
         for _ in range(hidden_1):
-            self.bias_1.append(0.0)
+            self.bias_1.append(random.uniform(-0.1, 0.1))
         for _ in range(hidden_2):
-            self.bias_2.append(0.0)
+            self.bias_2.append(random.uniform(-0.1, 0.1))
         for _ in range(outputs):
-            self.bias_3.append(0.0)
+            self.bias_3.append(random.uniform(-0.1, 0.1))
 
     def predict(self, arr):
         self.hidden_inputs1 = []
