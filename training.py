@@ -24,19 +24,15 @@ for epoch in range(len(lib)):
 
     network.train(lib[epoch][0], true_answer)
 
-    if epoch % 100 == 0:
-        total_error = 0
+global_err = 0
 
-        for arr, symbol in lib:
-            output = network.forward(arr)
-            target = [0] * len(symbols_lib)
-            target[symbols_lib.index(symbol)] = 1
+for arr, symbol in lib:
+    output = network.forward(arr)
+    target = [0] * len(symbols_lib)
+    target[symbols_lib.index(symbol)] = 1
 
-            for i in range(outputs_size):
-                error = output[i] - target[i]
-                squared_error = error ** 2
-                total_error += squared_error
+    for i in range(outputs_size):
+        global_err += (output[i] - target[i]) ** 2
 
-        average_error = total_error / len(lib)
-        print(f"Эпоха {epoch}, Средняя ошибка: {average_error}")
-
+average_error = global_err / len(lib)
+print(f"Глобальная ошибка: {average_error}")
