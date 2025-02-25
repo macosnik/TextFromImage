@@ -2,7 +2,14 @@ from neural_network import TwoLayersNeuralNetwork
 from image_utils import Image
 import os, time, random
 
-symbols_lib = ["0", "1"]
+def train():
+    for epoch in range(len(lib)):
+        true_answer = [0] * len(symbols_lib)
+        true_answer[symbols_lib.index(lib[epoch][1])] = 1
+
+        network.train(lib[epoch][0], true_answer)
+
+symbols_lib = ["0", "1", "2"]
 lib = []
 
 inputs_size = 625
@@ -22,13 +29,11 @@ network = TwoLayersNeuralNetwork(inputs_size, hidden_1_size, hidden_2_size, outp
 
 start_time = time.time()
 
-for epoch in range(len(lib)):
-    true_answer = [0] * len(symbols_lib)
-    true_answer[symbols_lib.index(lib[epoch][1])] = 1
+train()
+random.shuffle(lib)
+train()
 
-    network.train(lib[epoch][0], true_answer)
-
-print(round(time.time() - start_time, 3))
+print(f"Время обучения: {round(time.time() - start_time, 3)}")
 start_time = time.time()
 
 global_err = 0
@@ -46,5 +51,7 @@ print(f"Глобальная ошибка: {average_error}")
 
 print(round(time.time() - start_time, 3))
 
+
 print(network.forward(Image('DataCenter/tests/image_1.bmp').zero_to_one_list()))
 print(network.forward(Image('DataCenter/tests/image_2.bmp').zero_to_one_list()))
+print(network.forward(Image('DataCenter/tests/image_3.bmp').zero_to_one_list()))

@@ -187,6 +187,20 @@ class TwoLayersNeuralNetwork:
         for output_index in range(self.outputs_size):
             self.bias_3[output_index] -= gradient_bias_3[output_index]
 
+    def calculate_global_error(self, lib, symbols_lib):
+        global_err = 0
+
+        for arr, symbol in lib:
+            output = self.forward(arr)
+            target = [0] * len(symbols_lib)
+            target[symbols_lib.index(symbol)] = 1
+
+            for i in range(self.outputs_size):
+                global_err += (output[i] - target[i]) ** 2
+
+        average_error = global_err / len(lib)
+        print(f"Глобальная ошибка: {average_error}")
+
 
 
 
