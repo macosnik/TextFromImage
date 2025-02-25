@@ -239,6 +239,8 @@ class TwoLayersNeuralNetwork:
         for bias in self.bias_3:
             arr.append(bias)
 
+        print(len(arr))
+
         output_text = ""
 
         for param in arr:
