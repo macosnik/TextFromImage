@@ -82,41 +82,48 @@ class TwoLayersNeuralNetwork:
 
         else:
             with open(model_settings, "r") as file:
-                arr = file.read().split(' ')
-                arr = arr[:len(arr) - 1]
+                data = file.read().split(' ')
+                data = data[:len(data) - 1]
 
-            self.inputs_size = int(arr[1])
-            self.hidden_1_size = int(arr[2])
-            self.hidden_2_size = int(arr[3])
-            self.outputs_size = int(arr[4])
+            self.inputs_size = int(data[1])
+            self.hidden_1_size = int(data[2])
+            self.hidden_2_size = int(data[3])
+            self.outputs_size = int(data[4])
 
-            arr = arr[5:]
+            data = data[5:]
 
             for input_index in range(self.inputs_size):
                 part = []
                 for hidden_index in range(self.hidden_1_size):
-                    part.append(float(arr[input_index * hidden_index + hidden_index]))
+                    part.append(float(data[input_index * hidden_index + hidden_index]))
                 self.weights_1.append(part)
 
             for hidden_1_index in range(self.hidden_1_size):
                 part = []
                 for hidden_2_index in range(self.hidden_2_size):
-                    part.append(float(arr[hidden_1_index * hidden_2_index + hidden_2_index]))
+                    part.append(float(data[hidden_1_index * hidden_2_index + hidden_2_index]))
                 self.weights_2.append(part)
 
             for hidden_2_index in range(self.hidden_2_size):
                 part = []
                 for output_index in range(self.outputs_size):
-                    part.append(float(arr[hidden_2_index * output_index + output_index]))
+                    part.append(float(data[hidden_2_index * output_index + output_index]))
                 self.weights_3.append(part)
 
-            print(len(self.weights_1), len(self.weights_1[0]))
-            print(len(self.weights_2), len(self.weights_2[0]))
-            print(len(self.weights_3), len(self.weights_3[0]))
+            data = data[self.inputs_size * self.hidden_1_size + self.hidden_1_size * self.hidden_2_size + self.hidden_2_size * self.outputs_size:]
 
-            # arr = arr[len(self.inputs_size) * 1:]
+            for bias in range(self.hidden_1_size):
+                self.bias_1.append(float(data[bias]))
 
-            # for bias in range
+            data = data[16:]
+
+            for bias in range(self.hidden_2_size):
+                self.bias_2.append(float(data[bias]))
+
+            data = data[16:]
+
+            for bias in range(self.outputs_size):
+                self.bias_3.append(float(data[bias]))
 
     def forward(self, image):
         self.hidden_inputs1 = []

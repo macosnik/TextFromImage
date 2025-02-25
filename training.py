@@ -42,6 +42,9 @@ network.calculate_global_error(lib, symbols_lib)
 print(network.forward(Image('DataCenter/tests/image_1.bmp').zero_to_one_list()))
 print(network.forward(Image('DataCenter/tests/image_2.bmp').zero_to_one_list()))
 print(network.forward(Image('DataCenter/tests/image_3.bmp').zero_to_one_list()))
+print(network.forward(Image('DataCenter/tests/image_4.bmp').zero_to_one_list()))
+print(network.forward(Image('DataCenter/tests/image_5.bmp').zero_to_one_list()))
+print(network.forward(Image('DataCenter/tests/image_6.bmp').zero_to_one_list()))
 
 network.save_model("numbers_model_parameters.txt")
 
