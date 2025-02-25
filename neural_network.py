@@ -1,6 +1,4 @@
 import random
-from os import write
-
 
 def sigmoid(i):
     return 1 / (2.718281828459045 ** (- i) + 1)
@@ -83,8 +81,11 @@ class TwoLayersNeuralNetwork:
                 self.bias_3.append(random.uniform(-0.1, 0.1))
 
         else:
-            print('model_setting')
-            exit()
+            with open(model_settings, "r") as file:
+                arr = file.read().split(' ')
+                arr = arr[:len(arr) - 1]
+                print(arr)
+                print(len(arr))
 
     def forward(self, image):
         self.hidden_inputs1 = []
@@ -219,23 +220,48 @@ class TwoLayersNeuralNetwork:
                self.hidden_2_size,
                self.outputs_size]
 
+        weights = []
+
         for weights in self.weights_1:
-            arr.append(weights)
+            for param in weights:
+                weights.append(param)
+
+        print(len(weights))
+
         for weights in self.weights_2:
-            arr.append(weights)
+            for param in weights:
+                weights.append(param)
+
+        print(len(weights))
+
         for weights in self.weights_3:
-            arr.append(weights)
+            for param in weights:
+                weights.append(param)
+
+        print(len(weights))
+
+
+
         for bias in self.bias_1:
             arr.append(bias)
         for bias in self.bias_1:
             arr.append(bias)
         for bias in self.bias_1:
             arr.append(bias)
+
+        print(len(self.bias_1))
+        print(len(self.bias_2))
+        print(len(self.bias_3))
+
+        print()
+
+        print(len(arr))
 
         output_text = ""
 
         for param in arr:
-            output_text += param + " "
+            output_text += str(param)
+            output_text += " "
 
         with open(name_file, "w") as file:
             file.write(output_text)

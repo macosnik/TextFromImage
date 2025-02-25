@@ -25,7 +25,7 @@ for symbol in symbols_lib:
 
 random.shuffle(lib)
 
-# model_settings="numbers_model_parameters.txt"
+# network = TwoLayersNeuralNetwork(model_settings="numbers_model_parameters.txt")
 network = TwoLayersNeuralNetwork(inputs_size, hidden_1_size, hidden_2_size, outputs_size)
 
 start_time = time.time()
@@ -42,4 +42,6 @@ network.calculate_global_error(lib, symbols_lib)
 print(network.forward(Image('DataCenter/tests/image_1.bmp').zero_to_one_list()))
 print(network.forward(Image('DataCenter/tests/image_2.bmp').zero_to_one_list()))
 print(network.forward(Image('DataCenter/tests/image_3.bmp').zero_to_one_list()))
+
+network.save_model("numbers_model_parameters.txt")
 
