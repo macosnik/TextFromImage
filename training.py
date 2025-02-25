@@ -41,3 +41,4 @@ network.calculate_global_error(lib, symbols_lib)
 print(network.forward(Image('DataCenter/tests/image_1.bmp').zero_to_one_list()))
 print(network.forward(Image('DataCenter/tests/image_2.bmp').zero_to_one_list()))
 print(network.forward(Image('DataCenter/tests/image_3.bmp').zero_to_one_list()))
+

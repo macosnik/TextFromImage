@@ -35,7 +35,7 @@ def __calculate_global_error__(network, lib, symbols_lib):
     print(f"Глобальная ошибка: {round(average_error, 4)}")
 
 class TwoLayersNeuralNetwork:
-    def __init__(self, inputs_size, hidden_1_size, hidden_2_size, outputs_size):
+    def __init__(self, inputs_size, hidden_1_size, hidden_2_size, outputs_size, file_settings=None):
         self.inputs_size = inputs_size
         self.hidden_1_size = hidden_1_size
         self.hidden_2_size = hidden_2_size
@@ -53,30 +53,34 @@ class TwoLayersNeuralNetwork:
         self.output_inputs = []
         self.output = []
 
-        for i in range(inputs_size):
-            part = []
+        if file_settings is None:
+            for i in range(inputs_size):
+                part = []
+                for _ in range(hidden_1_size):
+                    part.append(random.uniform(-0.5, 0.5))
+                self.weights_1.append(part)
+
+            for i in range(hidden_1_size):
+                part = []
+                for _ in range(hidden_2_size):
+                    part.append(random.uniform(-0.5, 0.5))
+                self.weights_2.append(part)
+
+            for i in range(hidden_2_size):
+                part = []
+                for _ in range(outputs_size):
+                    part.append(random.uniform(-0.5, 0.5))
+                self.weights_3.append(part)
+
             for _ in range(hidden_1_size):
-                part.append(random.uniform(-0.5, 0.5))
-            self.weights_1.append(part)
-
-        for i in range(hidden_1_size):
-            part = []
+                self.bias_1.append(random.uniform(-0.1, 0.1))
             for _ in range(hidden_2_size):
-                part.append(random.uniform(-0.5, 0.5))
-            self.weights_2.append(part)
-
-        for i in range(hidden_2_size):
-            part = []
+                self.bias_2.append(random.uniform(-0.1, 0.1))
             for _ in range(outputs_size):
-                part.append(random.uniform(-0.5, 0.5))
-            self.weights_3.append(part)
+                self.bias_3.append(random.uniform(-0.1, 0.1))
 
-        for _ in range(hidden_1_size):
-            self.bias_1.append(random.uniform(-0.1, 0.1))
-        for _ in range(hidden_2_size):
-            self.bias_2.append(random.uniform(-0.1, 0.1))
-        for _ in range(outputs_size):
-            self.bias_3.append(random.uniform(-0.1, 0.1))
+        else:
+            pass
 
     def forward(self, image):
         self.hidden_inputs1 = []
