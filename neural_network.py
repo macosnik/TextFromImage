@@ -220,42 +220,24 @@ class TwoLayersNeuralNetwork:
                self.hidden_2_size,
                self.outputs_size]
 
-        weights = []
-
         for weights in self.weights_1:
             for param in weights:
-                weights.append(param)
-
-        print(len(weights))
+                arr.append(param)
 
         for weights in self.weights_2:
             for param in weights:
-                weights.append(param)
-
-        print(len(weights))
+                arr.append(param)
 
         for weights in self.weights_3:
             for param in weights:
-                weights.append(param)
-
-        print(len(weights))
-
-
+                arr.append(param)
 
         for bias in self.bias_1:
             arr.append(bias)
-        for bias in self.bias_1:
+        for bias in self.bias_2:
             arr.append(bias)
-        for bias in self.bias_1:
+        for bias in self.bias_3:
             arr.append(bias)
-
-        print(len(self.bias_1))
-        print(len(self.bias_2))
-        print(len(self.bias_3))
-
-        print()
-
-        print(len(arr))
 
         output_text = ""
 
