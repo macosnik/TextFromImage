@@ -34,22 +34,8 @@ random.shuffle(lib)
 train()
 
 print(f"Время обучения: {round(time.time() - start_time, 3)}")
-start_time = time.time()
 
-global_err = 0
-
-for arr, symbol in lib:
-    output = network.forward(arr)
-    target = [0] * len(symbols_lib)
-    target[symbols_lib.index(symbol)] = 1
-
-    for i in range(outputs_size):
-        global_err += (output[i] - target[i]) ** 2
-
-average_error = global_err / len(lib)
-print(f"Глобальная ошибка: {average_error}")
-
-print(round(time.time() - start_time, 3))
+network.calculate_global_error(lib, symbols_lib)
 
 
 print(network.forward(Image('DataCenter/tests/image_1.bmp').zero_to_one_list()))

@@ -20,6 +20,20 @@ def exit_nums(arr):
 
     return return_arr
 
+def __calculate_global_error__(network, lib, symbols_lib):
+    global_err = 0
+
+    for arr, symbol in lib:
+        output = network.forward(arr)
+        target = [0] * len(symbols_lib)
+        target[symbols_lib.index(symbol)] = 1
+
+        for i in range(network.outputs_size):
+            global_err += (output[i] - target[i]) ** 2
+
+    average_error = global_err / len(lib)
+    print(f"Глобальная ошибка: {round(average_error, 4)}")
+
 class TwoLayersNeuralNetwork:
     def __init__(self, inputs_size, hidden_1_size, hidden_2_size, outputs_size):
         self.inputs_size = inputs_size
@@ -188,18 +202,7 @@ class TwoLayersNeuralNetwork:
             self.bias_3[output_index] -= gradient_bias_3[output_index]
 
     def calculate_global_error(self, lib, symbols_lib):
-        global_err = 0
-
-        for arr, symbol in lib:
-            output = self.forward(arr)
-            target = [0] * len(symbols_lib)
-            target[symbols_lib.index(symbol)] = 1
-
-            for i in range(self.outputs_size):
-                global_err += (output[i] - target[i]) ** 2
-
-        average_error = global_err / len(lib)
-        print(f"Глобальная ошибка: {average_error}")
+        __calculate_global_error__(self, lib, symbols_lib)
 
 
 
