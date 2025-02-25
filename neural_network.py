@@ -1,4 +1,6 @@
 import random
+from os import write
+
 
 def sigmoid(i):
     return 1 / (2.718281828459045 ** (- i) + 1)
@@ -217,9 +219,26 @@ class TwoLayersNeuralNetwork:
                self.hidden_2_size,
                self.outputs_size]
 
+        for weights in self.weights_1:
+            arr.append(weights)
+        for weights in self.weights_2:
+            arr.append(weights)
+        for weights in self.weights_3:
+            arr.append(weights)
+        for bias in self.bias_1:
+            arr.append(bias)
+        for bias in self.bias_1:
+            arr.append(bias)
+        for bias in self.bias_1:
+            arr.append(bias)
 
+        output_text = ""
 
+        for param in arr:
+            output_text += param + " "
 
+        with open(name_file, "w") as file:
+            file.write(output_text)
 
 
 
