@@ -25,19 +25,21 @@ for symbol in symbols_lib:
 
 random.shuffle(lib)
 
-network = TwoLayersNeuralNetwork(model_settings="numbers_model_parameters.txt")
-# network = TwoLayersNeuralNetwork(inputs_size, hidden_1_size, hidden_2_size, outputs_size)
+# network = TwoLayersNeuralNetwork(model_settings="numbers_model_parameters.txt")
+network = TwoLayersNeuralNetwork(inputs_size, hidden_1_size, hidden_2_size, outputs_size)
 
 start_time = time.time()
 
 train()
-random.shuffle(lib)
+train()
+train()
+train()
+train()
 train()
 
 print(f"Время обучения: {round(time.time() - start_time, 3)}")
 
 network.calculate_global_error(lib, symbols_lib)
-
 
 print(network.forward(Image('DataCenter/tests/image_1.bmp').zero_to_one_list()))
 print(network.forward(Image('DataCenter/tests/image_2.bmp').zero_to_one_list()))

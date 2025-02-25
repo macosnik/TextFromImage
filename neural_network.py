@@ -96,6 +96,7 @@ class TwoLayersNeuralNetwork:
                 part = []
                 for hidden_index in range(self.hidden_1_size):
                     part.append(float(data[input_index * hidden_index + hidden_index]))
+                    print(float(data[input_index * hidden_index + hidden_index]))
                 self.weights_1.append(part)
 
             for hidden_1_index in range(self.hidden_1_size):
