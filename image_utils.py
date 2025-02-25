@@ -10,7 +10,7 @@ class Image:
         self.__load__()
 
     def __load__(self):
-        os.system(f"convert {self.name} -depth 24 -type TrueColor {self.name[:self.name.rfind('.')]}.bmp")
+        os.system(f"magick {self.name} -depth 24 -type TrueColor {self.name[:self.name.rfind('.')]}.bmp")
 
         with open(f"{self.name[:self.name.rfind('.')]}.bmp", 'rb') as file:
             data = file.read(54)
