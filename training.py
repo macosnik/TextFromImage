@@ -25,8 +25,8 @@ for symbol in symbols_lib:
 
 random.shuffle(lib)
 
-# network = TwoLayersNeuralNetwork(model_settings="numbers_model_parameters.txt")
-network = TwoLayersNeuralNetwork(inputs_size, hidden_1_size, hidden_2_size, outputs_size)
+network = TwoLayersNeuralNetwork(model_settings="numbers_model_parameters.txt")
+# network = TwoLayersNeuralNetwork(inputs_size, hidden_1_size, hidden_2_size, outputs_size)
 
 start_time = time.time()
 

@@ -55,19 +55,19 @@ class TwoLayersNeuralNetwork:
             self.hidden_2_size = hidden_2_size
             self.outputs_size = outputs_size
 
-            for i in range(inputs_size):
+            for _ in range(inputs_size):
                 part = []
                 for _ in range(hidden_1_size):
                     part.append(random.uniform(-0.5, 0.5))
                 self.weights_1.append(part)
 
-            for i in range(hidden_1_size):
+            for _ in range(hidden_1_size):
                 part = []
                 for _ in range(hidden_2_size):
                     part.append(random.uniform(-0.5, 0.5))
                 self.weights_2.append(part)
 
-            for i in range(hidden_2_size):
+            for _ in range(hidden_2_size):
                 part = []
                 for _ in range(outputs_size):
                     part.append(random.uniform(-0.5, 0.5))
@@ -84,8 +84,39 @@ class TwoLayersNeuralNetwork:
             with open(model_settings, "r") as file:
                 arr = file.read().split(' ')
                 arr = arr[:len(arr) - 1]
-                print(arr)
-                print(len(arr))
+
+            self.inputs_size = int(arr[1])
+            self.hidden_1_size = int(arr[2])
+            self.hidden_2_size = int(arr[3])
+            self.outputs_size = int(arr[4])
+
+            arr = arr[5:]
+
+            for input_index in range(self.inputs_size):
+                part = []
+                for hidden_index in range(self.hidden_1_size):
+                    part.append(float(arr[input_index * hidden_index + hidden_index]))
+                self.weights_1.append(part)
+
+            for hidden_1_index in range(self.hidden_1_size):
+                part = []
+                for hidden_2_index in range(self.hidden_2_size):
+                    part.append(float(arr[hidden_1_index * hidden_2_index + hidden_2_index]))
+                self.weights_2.append(part)
+
+            for hidden_2_index in range(self.hidden_2_size):
+                part = []
+                for output_index in range(self.outputs_size):
+                    part.append(float(arr[hidden_2_index * output_index + output_index]))
+                self.weights_3.append(part)
+
+            print(len(self.weights_1), len(self.weights_1[0]))
+            print(len(self.weights_2), len(self.weights_2[0]))
+            print(len(self.weights_3), len(self.weights_3[0]))
+
+            # arr = arr[len(self.inputs_size) * 1:]
+
+            # for bias in range
 
     def forward(self, image):
         self.hidden_inputs1 = []
@@ -238,8 +269,6 @@ class TwoLayersNeuralNetwork:
             arr.append(bias)
         for bias in self.bias_3:
             arr.append(bias)
-
-        print(len(arr))
 
         output_text = ""
 
