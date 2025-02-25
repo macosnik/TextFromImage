@@ -53,7 +53,7 @@ for _ in range(10):
 
 print()
 
-print(f"Время обучения: {round(time.time() - start_time, 3)}")
+print(f"Время обучения: {round(time.time() - start_time, 3)} сек.")
 
 network.calculate_global_error(lib, symbols_lib)
 
@@ -63,7 +63,6 @@ print(network.forward(Image('DataCenter/tests/image_3.bmp').zero_to_one_list()))
 print(network.forward(Image('DataCenter/tests/image_4.bmp').zero_to_one_list()))
 print(network.forward(Image('DataCenter/tests/image_5.bmp').zero_to_one_list()))
 print(network.forward(Image('DataCenter/tests/image_6.bmp').zero_to_one_list()))
-print(network.forward(Image('DataCenter/tests/image_7.bmp').zero_to_one_list()))
 
 network.save_model("numbers_model_parameters.txt")
 

@@ -1,4 +1,5 @@
-import os, math
+import os, math, time
+
 
 class Image:
     def __init__(self, name):
