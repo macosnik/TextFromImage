@@ -35,11 +35,7 @@ def __calculate_global_error__(network, lib, symbols_lib):
     print(f"Глобальная ошибка: {round(average_error, 4)}")
 
 class TwoLayersNeuralNetwork:
-    def __init__(self, inputs_size, hidden_1_size, hidden_2_size, outputs_size, file_settings=None):
-        self.inputs_size = inputs_size
-        self.hidden_1_size = hidden_1_size
-        self.hidden_2_size = hidden_2_size
-        self.outputs_size = outputs_size
+    def __init__(self, inputs_size=None, hidden_1_size=None, hidden_2_size=None, outputs_size=None, model_settings=None):
         self.weights_1 = []
         self.weights_2 = []
         self.weights_3 = []
@@ -53,7 +49,12 @@ class TwoLayersNeuralNetwork:
         self.output_inputs = []
         self.output = []
 
-        if file_settings is None:
+        if model_settings is None:
+            self.inputs_size = inputs_size
+            self.hidden_1_size = hidden_1_size
+            self.hidden_2_size = hidden_2_size
+            self.outputs_size = outputs_size
+
             for i in range(inputs_size):
                 part = []
                 for _ in range(hidden_1_size):
@@ -80,7 +81,8 @@ class TwoLayersNeuralNetwork:
                 self.bias_3.append(random.uniform(-0.1, 0.1))
 
         else:
-            pass
+            print('model_setting')
+            exit()
 
     def forward(self, image):
         self.hidden_inputs1 = []
@@ -207,6 +209,15 @@ class TwoLayersNeuralNetwork:
 
     def calculate_global_error(self, lib, symbols_lib):
         __calculate_global_error__(self, lib, symbols_lib)
+
+    def save_model(self, name_file):
+        arr = ['2layers',
+               self.inputs_size,
+               self.hidden_1_size,
+               self.hidden_2_size,
+               self.outputs_size]
+
+
 
 
 
