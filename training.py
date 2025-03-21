@@ -22,6 +22,8 @@ def train():
         true_answer = [0] * len(symbols_lib)
         true_answer[symbols_lib.index(lib[epoch][1])] = 1
 
+        print(true_answer)
+
         network.train(lib[epoch][0], true_answer)
 
 symbols_lib = ["0", "1", "2"]
@@ -48,7 +50,7 @@ network = TwoLayersNeuralNetwork(inputs_size, hidden_1_size, hidden_2_size, outp
 
 start_time = time.time()
 
-for _ in range(10):
+for _ in range(1):
     train()
 
 print()
@@ -57,12 +59,17 @@ print(f"Время обучения: {round(time.time() - start_time, 3)} сек
 
 network.calculate_global_error(lib, symbols_lib)
 
+start_time = time.time()
+
 print(network.forward(Image('DataCenter/tests/image_1.bmp').zero_to_one_list()))
-print(network.forward(Image('DataCenter/tests/image_2.bmp').zero_to_one_list()))
-print(network.forward(Image('DataCenter/tests/image_3.bmp').zero_to_one_list()))
-print(network.forward(Image('DataCenter/tests/image_4.bmp').zero_to_one_list()))
-print(network.forward(Image('DataCenter/tests/image_5.bmp').zero_to_one_list()))
-print(network.forward(Image('DataCenter/tests/image_6.bmp').zero_to_one_list()))
+
+print(time.time() - start_time)
+
+# print(network.forward(Image('DataCenter/tests/image_2.bmp').zero_to_one_list()))
+# print(network.forward(Image('DataCenter/tests/image_3.bmp').zero_to_one_list()))
+# print(network.forward(Image('DataCenter/tests/image_4.bmp').zero_to_one_list()))
+# print(network.forward(Image('DataCenter/tests/image_5.bmp').zero_to_one_list()))
+# print(network.forward(Image('DataCenter/tests/image_6.bmp').zero_to_one_list()))
 
 network.save_model("numbers_model_parameters.txt")
 

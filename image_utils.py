@@ -110,7 +110,7 @@ class Image:
         for y in range(self.height):
             for x in range(self.width):
                 color = sum(self.arr[y][x]) // 3
-                self.arr[y][x] = (color, color, color)
+                self.arr[y][x] = ((255 - color), (255 - color), (255 - color))
 
     def zero_to_one_list(self):
         arr = []

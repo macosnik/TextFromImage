@@ -3,13 +3,12 @@ from image_utils import Image
 
 symbols_lib = ["0", "1", "2"]
 
+image = Image('DataCenter/tests/image_3.bmp')
+arr = image.zero_to_one_list()
+
 network = TwoLayersNeuralNetwork(model_settings="numbers_model_parameters.txt")
 
-image = Image('DataCenter/tests/image_6.bmp').zero_to_one_list()
-
-result = network.forward(image)
-
-print(result)
+result = network.forward(arr)
 
 max_value = max(result)
 max_index = result.index(max_value)
